@@ -78,4 +78,17 @@ jobs:
       with:
         name: build-artifacts
         path: target/*.jar
-        
+  create_artifacts:
+    name: Create Artifact
+    needs: store_artifacts
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: build-artifacts
+
+    - name: Display downloaded files
+      run: ls
+
+
