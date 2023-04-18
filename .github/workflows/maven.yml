@@ -50,10 +50,10 @@ jobs:
         cache: maven
     - name: Copy JAR files to artifact directory
       run: |
-        mkdir -p ${{ github.workspace }}/artifacts
-        cp target/*.jar ${{ github.workspace }}/artifacts/
+        mkdir -p ${{ github.workspace }}/target/JARS
+        cp target/*.jar ${{ github.workspace }}/target/JARS/
     - name: Upload build artifacts
       uses: actions/upload-artifact@v2
       with:
         name: build-artifacts
-        path: ${{ github.workspace }}/artifacts/*.jar
+        path: ${{ github.workspace }}/target/JARS/*.jar
