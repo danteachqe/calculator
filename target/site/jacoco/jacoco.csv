@@ -1,0 +1,5 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Spring Boot Blank Project (from https://github.com/making/spring-boot-blank),com,CalculatorApplication,8,0,0,0,3,0,2,0,2,0
+Spring Boot Blank Project (from https://github.com/making/spring-boot-blank),com,CalculationRequest,15,21,0,0,8,8,4,4,4,4
+Spring Boot Blank Project (from https://github.com/making/spring-boot-blank),com,CalculationResult,7,9,0,0,4,4,2,2,2,2
+Spring Boot Blank Project (from https://github.com/making/spring-boot-blank),com,CalculatorController,0,50,0,5,0,12,0,6,0,2
