@@ -18,8 +18,14 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         cache: maven
-    - name: Run unit tests
-      run: mvn -B test --file pom.xml
+    - name: Run unit tests and calculate code coverage
+      run: mvn -B test jacoco:report --file pom.xml
+    - name: Archive code coverage results
+      uses: actions/upload-artifact@v2
+      with:
+        name: code-coverage-report
+        path: target/site/jacoco/
+        retention-days: 7
 
   build:
     runs-on: ubuntu-latest
