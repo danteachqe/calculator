@@ -62,7 +62,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: build-artifacts
-        path: path/to/your/artifacts
+        path: /target/*.jar
 
 
 
