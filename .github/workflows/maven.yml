@@ -44,7 +44,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    needs: test
+    needs: run_coverage
 
     steps:
     - uses: actions/checkout@v2
