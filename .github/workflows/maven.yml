@@ -89,6 +89,4 @@ jobs:
         name: build-artifacts
 
     - name: Display downloaded files
-      run: ls
-
-
+      run: ls -R
