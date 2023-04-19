@@ -7,8 +7,19 @@ on:
     branches: [ "master" ]
 
 jobs:
+  super_linter:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Run Super-Linter
+      uses: github/super-linter@v4
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   run_unit_tests:
     runs-on: ubuntu-latest
+    needs: super_linter
 
     steps:
     - uses: actions/checkout@v2
