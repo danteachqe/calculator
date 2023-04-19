@@ -22,6 +22,10 @@ jobs:
 
       - name: Install newman
         run: npm install -g newman
-
+      - name: List files and directories
+         run: |
+          ls -al
+          ls -al src/test
+          ls -al src/test/postman_tests
       - name: Run Postman tests
         run: newman run src/test/Postman_Tests/Calculate.postman_collection.json
