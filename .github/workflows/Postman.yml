@@ -30,4 +30,4 @@ jobs:
           ls -al src/test/postman_tests
 
       - name: Run Postman tests
-        run: newman run src/test/Postman_Tests/Calculate.postman_collection.json
+        run: newman run src/test/postman_Tests/Calculate.postman_collection.json
