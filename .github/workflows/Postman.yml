@@ -1,10 +1,10 @@
 on:
   push:
-    branches: [ "master" ]
+    branches: ["master"]
   pull_request:
-    branches: [ "master" ]
+    branches: ["master"]
 
-jobs:  
+jobs:
   postman_tests:
     runs-on: ubuntu-latest
 
@@ -22,10 +22,12 @@ jobs:
 
       - name: Install newman
         run: npm install -g newman
+
       - name: List files and directories
-         run: |
+        run: |
           ls -al
           ls -al src/test
           ls -al src/test/postman_tests
+
       - name: Run Postman tests
         run: newman run src/test/Postman_Tests/Calculate.postman_collection.json
