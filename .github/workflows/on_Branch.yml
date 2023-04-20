@@ -3,7 +3,7 @@ name: My Workflow
 on:
   push:
     branches:
-      - '!master'
+      - 'test'
 
 jobs:
   postman_tests:
