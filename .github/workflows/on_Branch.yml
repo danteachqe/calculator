@@ -19,8 +19,7 @@ jobs:
         env:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          FILTER_REGEX_EXCLUDE: ^target/.* 
-          FILTER_REGEX_INCLUDE: ^src/.*
+          FILTER_REGEX_EXCLUDE: ^target/.*           
 
   run_unit_tests:
     runs-on: ubuntu-latest
