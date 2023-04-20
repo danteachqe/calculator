@@ -20,6 +20,7 @@
         <start-class>com.CalculatorApplication</start-class>
         <java.version>11</java.version>
         <lombok.version>1.18.20</lombok.version>
+        <coverage.need>0.7</coverage.need>
     </properties>
 
     <dependencies>
@@ -85,7 +86,7 @@
                   <limit>
                     <counter>LINE</counter>
                     <value>COVEREDRATIO</value>
-                    <minimum>0.5</minimum>
+                    <minimum>${coverage.need}</minimum>
                   </limit>
                 </limits>
               </rule>
