@@ -8,8 +8,7 @@ on:
 
 jobs:
   run_unit_tests:
-    runs-on: ubuntu-latest
-    needs: super-lint
+    runs-on: ubuntu-latest    
 
     steps:
     - uses: actions/checkout@v2
