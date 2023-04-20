@@ -2,8 +2,9 @@ name: My Workflow
 
 on:
   push:
-    branches:
-      - 'test'
+    branches-ignore:
+      - 'master'
+
 
 jobs:
   postman_tests:
