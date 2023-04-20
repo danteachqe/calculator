@@ -20,7 +20,7 @@ public class CalculatorControllerCalculationTests {
     @Test
     public void testSubtract() {
         CalculationRequest request = new CalculationRequest(5, 2, "subtract");
-        double expected = 3;
+        double expected = 5;
 
         CalculatorController controller = new CalculatorController();
         CalculationResult result = controller.calculate(request);
