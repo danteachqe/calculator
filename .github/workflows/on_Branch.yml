@@ -49,7 +49,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Calculate code coverage
-      run: mvn -B jacoco:prepare-agent test jacoco:report --file pom.xml
+      run: mvn clean verify jacoco:report
     - name: Archive code coverage results
       uses: actions/upload-artifact@v2
       with:
