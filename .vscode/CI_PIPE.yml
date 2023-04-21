@@ -1,0 +1,108 @@
+name: CI_PIPE
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  run_unit_tests:
+    runs-on: ubuntu-latest    
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: maven
+    - name: Run unit tests
+      run: mvn -B test --file pom.xml
+  # run_coverage:
+  #   runs-on: ubuntu-latest
+  #   needs: run_unit_tests
+
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - name: Set up JDK 11
+  #     uses: actions/setup-java@v2
+  #     with:
+  #       java-version: '11'
+  #       distribution: 'temurin'
+  #       cache: maven
+  #   - name: Calculate code coverage
+  #     run: mvn -B jacoco:prepare-agent test jacoco:report --file pom.xml
+  #   - name: Archive code coverage results
+  #     uses: actions/upload-artifact@v2
+  #     with:
+  #       name: code-coverage-report
+  #       path: target/site/jacoco/
+  #       retention-days: 7
+
+  build:
+    runs-on: ubuntu-latest
+    needs: run_unit_tests
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: maven
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
+    - name: Upload artifact for deployment job
+      uses: actions/upload-artifact@v2
+      with:
+        name: java-app
+        path: '${{ github.workspace }}/target/*.jar'
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    
+    steps:
+    - name: Download artifact from build job
+      uses: actions/download-artifact@v2
+      with:
+        name: java-app
+
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'playground1'
+        slot-name: 'Production'
+        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0BEA4837F01F4E4D9BCEE1ADAE79D999 }}
+        package: '*.jar'
+
+    - name: Display downloaded files
+      run: ls -R
+      
+  postman_tests:
+    runs-on: ubuntu-latest
+    needs: deploy
+    steps:
+    - name: Checkout repository code
+      uses: actions/checkout@v2
+
+    - name: Wait for 10 seconds
+      run: sleep 10s
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 14
+
+    - name: Install newman
+      run: npm install -g newman
+
+    - name: Run Postman tests
+      run: newman run ${{ github.workspace }}/src/test/Postman_Tests/Calculate.postman_collection.json
