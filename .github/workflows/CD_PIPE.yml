@@ -5,6 +5,7 @@ on:
     branches: [ "master" ]
 
 jobs:
+<<<<<<< HEAD
   super-lint:
     runs-on: ubuntu-latest
     if: env.RUN_SUPER_LINTER == 'true'
@@ -19,6 +20,22 @@ jobs:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           FILTER_REGEX_EXCLUDE: '^target/.*'        
+=======
+  # super-lint:
+  #   runs-on: ubuntu-latest
+  #   if: env.RUN_SUPER_LINTER == 'true'
+  #   steps:
+  #     - name: Checkout repository code
+  #       uses: actions/checkout@v2
+
+  #     - name: Run Super-Linter
+  #       uses: github/super-linter@v4
+  #       continue-on-error: true
+  #       env:
+  #         DEFAULT_BRANCH: main
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #         FILTER_REGEX_EXCLUDE: '^target/.*'        
+>>>>>>> testcd
   build:
     runs-on: ubuntu-latest    
 
