@@ -18,3 +18,4 @@ public class CalculationResult {
         this.result = result;
     }
 }
+//this is some comment
