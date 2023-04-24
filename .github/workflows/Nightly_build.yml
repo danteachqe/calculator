@@ -140,6 +140,9 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     
     steps:
+    
+    - name: Wait for 60 seconds
+      run: sleep 60s
     - name: Download artifact from build job
       uses: actions/download-artifact@v2
       with:
@@ -156,23 +159,29 @@ jobs:
 
     - name: Display downloaded files
       run: ls -R
-  run_performance:
+  lighthouse_check:
     runs-on: ubuntu-latest
-    needs: deploy_performance
+    
     steps:
-    - name: Checkout repository code
-      uses: actions/checkout@v2
+      - name: Checkout repository code
+        uses: actions/checkout@v2
 
-    - name: Wait for 10 seconds
-      run: sleep 10s
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: 14
+      - name: Install jq
+        run: sudo apt-get install jq
 
-    - name: Install newman
-      run: npm install -g newman
+      - name: Install Lighthouse
+        run: npm install -g lighthouse
 
-    - name: Run Postman tests
-      run: newman run ${{ github.workspace }}/src/test/Postman_Tests/Calculate.postman_collection.json
+      - name: Run Lighthouse and check performance
+        run: |
+          LIGHTHOUSE_SCORE=$(lighthouse --output=json --quiet --chrome-flags="--headless --no-sandbox" "https://www.guru99.com" | jq '.categories.performance.score * 100')
+          echo "Performance score: $LIGHTHOUSE_SCORE"
+          if [ $LIGHTHOUSE_SCORE -lt 90 ]; then
+            echo "error: Performance score is below 90. Blocking PR."
+            exit 1
+          fi
