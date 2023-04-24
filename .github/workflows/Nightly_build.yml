@@ -6,7 +6,7 @@ on:
 jobs:  
   super-lint:
     runs-on: ubuntu-latest
-    if: env.RUN_SUPER_LINTER == 'true'
+  
     steps:
       - name: Checkout repository code
         uses: actions/checkout@v2
@@ -57,7 +57,7 @@ jobs:
 
   scan_dependency:
     runs-on: ubuntu-latest
-    needs: run_unit_tests
+    needs: run_coverage
 
     steps:
     - uses: actions/checkout@v2
