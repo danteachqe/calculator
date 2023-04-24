@@ -31,4 +31,3 @@ jobs:
             echo "error: Performance score is below 90. Blocking PR."
             exit 1
           fi
-#comment 
