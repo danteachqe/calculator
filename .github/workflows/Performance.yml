@@ -1,0 +1,33 @@
+name: Performance Check
+
+on:
+  workflow_dispatch:
+
+jobs:  
+
+  lighthouse_check:
+    runs-on: ubuntu-latest
+   
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
+      - name: Install jq
+        run: sudo apt-get install jq
+
+      - name: Install Lighthouse
+        run: npm install -g lighthouse
+
+      - name: Run Lighthouse and check performance
+        run: |
+          LIGHTHOUSE_SCORE=$(lighthouse --output=json --quiet --chrome-flags="--headless --no-sandbox" "https://www.guru99.com" | jq '.categories.performance.score * 100')
+          echo "Performance score: $LIGHTHOUSE_SCORE"
+          if [ $LIGHTHOUSE_SCORE -lt 90 ]; then
+            echo "error: Performance score is below 90. Blocking PR."
+            exit 1
+          fi

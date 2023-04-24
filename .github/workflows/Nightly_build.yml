@@ -125,7 +125,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: 14
+        node-version: 16
 
     - name: Install newman
       run: npm install -g newman
@@ -161,7 +161,7 @@ jobs:
       run: ls -R
   lighthouse_check:
     runs-on: ubuntu-latest
-    
+    needs: deploy_performance
     steps:
       - name: Checkout repository code
         uses: actions/checkout@v2
