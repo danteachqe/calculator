@@ -3,8 +3,7 @@ name: Build and Deploy
 on:
   workflow_dispatch:
 
-jobs:
-  jobs:
+jobs:  
   super-lint:
     runs-on: ubuntu-latest
     if: env.RUN_SUPER_LINTER == 'true'
