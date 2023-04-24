@@ -3,14 +3,19 @@
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.Collections;
+import org.owasp.encoder.Encode;
 
 @SpringBootApplication
-<span class="nc" id="L8">public class CalculatorApplication {</span>
+<span class="nc" id="L9">public class CalculatorApplication {</span>
 
     public static void main(String[] args) {
-<span class="nc" id="L11">        SpringApplication app = new SpringApplication(CalculatorApplication.class);</span>
-<span class="nc" id="L12">        app.setDefaultProperties(Collections.singletonMap(&quot;server.port&quot;, &quot;80&quot;));</span>
-<span class="nc" id="L13">        app.run(args);  </span>
-<span class="nc" id="L14">    }</span>
+<span class="nc" id="L12">        SpringApplication app = new SpringApplication(CalculatorApplication.class);</span>
+<span class="nc" id="L13">        app.setDefaultProperties(Collections.singletonMap(&quot;server.port&quot;, &quot;80&quot;));</span>
+<span class="nc" id="L14">        app.run(args);  </span>
+    // Example of using org.owasp.encoder to encode user input
+<span class="nc" id="L16">    String userInput = &quot;&lt;script&gt;alert('XSS attack!');&lt;/script&gt;&quot;;</span>
+<span class="nc" id="L17">    String encodedInput = Encode.forHtml(userInput);</span>
+<span class="nc" id="L18">    System.out.println(encodedInput);    </span>
+<span class="nc" id="L19">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
