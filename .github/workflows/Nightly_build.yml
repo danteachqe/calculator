@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Nightly Build
 
 on:
   workflow_dispatch:
