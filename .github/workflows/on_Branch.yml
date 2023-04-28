@@ -37,7 +37,7 @@ jobs:
         cache: maven
     - name: Run unit tests
       run: mvn -B test --file pom.xml
-      
+ #comment     
   scan_dependency:
     runs-on: ubuntu-latest
     needs: run_unit_tests

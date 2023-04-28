@@ -32,6 +32,7 @@
 #         java-version: '11'
 #         distribution: 'temurin'
 #         cache: maven
+#         node-version: 16
 #     - name: Run unit tests
 #       run: mvn -B test --file pom.xml
 
@@ -47,6 +48,7 @@
 #         java-version: '11'
 #         distribution: 'temurin'
 #         cache: maven
+#         node-version: 16
 #     - name: Calculate code coverage
 #       run: mvn clean verify jacoco:report "-Ddependency-check.skip=true"
 #     - name: Archive code coverage results
