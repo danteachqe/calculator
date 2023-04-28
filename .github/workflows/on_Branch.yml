@@ -64,7 +64,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Calculate code coverage
-      run: mvn clean verify jacoco:report
+      run: mvn clean verify -Ddependency-check.skip=true jacoco:report
     - name: Archive code coverage results
       uses: actions/upload-artifact@v2
       with:

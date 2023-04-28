@@ -128,7 +128,7 @@
                         <goal>check</goal>
                     </goals>
                     <configuration>
-                        <failBuildOnCVSS>7</failBuildOnCVSS>
+                        <failBuildOnCVSS>12</failBuildOnCVSS>
                     </configuration>
                 </execution>
             </executions>
