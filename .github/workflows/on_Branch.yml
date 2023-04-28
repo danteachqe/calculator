@@ -49,7 +49,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: mvn clean install   
+      run: mvn dependency-check:check -DskipTests 
 
   run_coverage:
     runs-on: ubuntu-latest
@@ -64,7 +64,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Calculate code coverage
-      run: mvn clean verify -Ddependency-check.skip=true jacoco:report
+      run: mvn clean verify jacoco:report "-Ddependency-check.skip=true"
     - name: Archive code coverage results
       uses: actions/upload-artifact@v2
       with:

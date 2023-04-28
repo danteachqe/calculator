@@ -64,7 +64,7 @@
             <plugin>
       <groupId>org.jacoco</groupId>
       <artifactId>jacoco-maven-plugin</artifactId>
-      <version>0.8.7</version>
+      <version>0.8.10</version>
       <executions>
         <execution>
           <id>default-prepare-agent</id>
@@ -101,7 +101,6 @@
         </execution>
       </executions>
     </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -121,9 +120,10 @@
             <plugin>
             <groupId>org.owasp</groupId>
             <artifactId>dependency-check-maven</artifactId>
-            <version>6.2.2</version>
+            <version>8.2.1</version>
             <executions>
                 <execution>
+                <phase>verify</phase>
                     <goals>
                         <goal>check</goal>
                     </goals>
