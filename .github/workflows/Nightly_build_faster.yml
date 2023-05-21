@@ -1,0 +1,190 @@
+name: Nightly Build
+
+on:
+  workflow_dispatch:
+
+jobs:  
+  super-lint:
+    runs-on: ubuntu-latest
+  
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v2
+
+      - name: Run Super-Linter
+        uses: github/super-linter@v4
+        continue-on-error: true
+        env:
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FILTER_REGEX_EXCLUDE: '^target/.*'        
+
+  run_unit_tests:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: maven
+        node-version: 16
+    - name: Run unit tests
+      run: mvn -B test --file pom.xml
+
+  run_coverage:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: maven
+        node-version: 16
+    - name: Calculate code coverage
+      run: mvn clean verify jacoco:report "-Ddependency-check.skip=true"  
+    - name: Archive code coverage results
+      uses: actions/upload-artifact@v2
+      with:
+        name: code-coverage-report
+        path: target/site/jacoco/
+        retention-days: 7
+
+  scan_dependency:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        node-version: 16
+        cache: maven
+    - name: Build with Maven
+      run: mvn dependency-check:check -DskipTests
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [scan_dependency,run_coverage,run_unit_tests,super-lint]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: maven
+        node-version: 16
+    - name: Build with Maven
+      run: mvn clean install "-DskipTests" "-Djacoco.skip=true" "-Ddependency-check.skip=true"
+    - name: Upload artifact for deployment job
+      uses: actions/upload-artifact@v2
+      with:
+        name: java-app
+        path: '${{ github.workspace }}/target/*.jar'  
+
+  deploy_functional:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    
+    steps:
+    - name: Download artifact from build job
+      uses: actions/download-artifact@v2
+      with:
+        name: java-app
+
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'playground1'
+        slot-name: 'Production'
+        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0BEA4837F01F4E4D9BCEE1ADAE79D999 }}
+        package: '*.jar'
+
+    - name: Display downloaded files
+      run: ls -R
+  postman_tests:
+    runs-on: ubuntu-latest
+    needs: deploy_functional
+    steps:
+    - name: Checkout repository code
+      uses: actions/checkout@v2
+
+    - name: Wait for 10 seconds
+      run: sleep 10s
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 16
+
+    - name: Install newman
+      run: npm install -g newman
+
+    - name: Run Postman tests
+      run: newman run ${{ github.workspace }}/src/test/Postman_Tests/Calculate.postman_collection.json
+  deploy_performance:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    
+    steps:
+    
+    - name: Wait for 60 seconds
+      run: sleep 60s
+    - name: Download artifact from build job
+      uses: actions/download-artifact@v2
+      with:
+        name: java-app
+
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'playground1'
+        slot-name: 'Production'
+        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0BEA4837F01F4E4D9BCEE1ADAE79D999 }}
+        package: '*.jar'
+
+    - name: Display downloaded files
+      run: ls -R
+  lighthouse_check:
+    runs-on: ubuntu-latest
+    needs: deploy_performance
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Install jq
+        run: sudo apt-get install jq
+
+      - name: Install Lighthouse
+        run: npm install -g lighthouse
+
+      - name: Run Lighthouse and check performance
+        run: |
+          LIGHTHOUSE_SCORE=$(lighthouse --output=json --quiet --chrome-flags="--headless --no-sandbox" "https://www.guru99.com" | jq '.categories.performance.score * 100')
+          echo "Performance score: $LIGHTHOUSE_SCORE"
+          if [ $LIGHTHOUSE_SCORE -lt 90 ]; then
+            echo "error: Performance score is below 90. Blocking PR."
+            exit 1
+          fi
