@@ -1,4 +1,4 @@
-name: Nightly Build
+name: NCI Pipe Long
 
 on:
   workflow_dispatch:
