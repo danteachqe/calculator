@@ -3,7 +3,6 @@ name: Feature Workflow improvement
 on:
     workflow_dispatch:
 
-
 jobs:
   super-lint:
     runs-on: ubuntu-latest    
