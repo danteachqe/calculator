@@ -1,4 +1,4 @@
-name: NCI Pipe Long
+name: CI Pipe Long
 
 on:
   workflow_dispatch:
