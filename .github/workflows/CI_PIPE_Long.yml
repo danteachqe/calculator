@@ -1,8 +1,7 @@
-name: CI_PIPE
+name: CI_PIPE_Long
 
 on:  
-  pull_request:
-    branches: [ "master" ]
+  workflow_dispatch:
 
 jobs:
   # super-lint:
