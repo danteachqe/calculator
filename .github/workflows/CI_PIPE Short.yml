@@ -58,7 +58,7 @@ jobs:
         retention-days: 7
   build:
     runs-on: ubuntu-latest
-    needs: run_unit_tests_integration_pipe
+    needs: run_CI_Vulnerabilities_scan
 
     steps:
     - uses: actions/checkout@v2
