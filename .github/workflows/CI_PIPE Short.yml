@@ -1,0 +1,78 @@
+name: CI_PIPE Short
+
+on:
+  workflow_dispatch:
+
+jobs:
+  # super-lint:
+  #   runs-on: ubuntu-latest
+  #   if: env.RUN_SUPER_LINTER == 'true'
+  #   steps:
+  #     - name: Checkout repository code
+  #       uses: actions/checkout@v2
+
+  #     - name: Run Super-Linter
+  #       uses: github/super-linter@v4
+  #       continue-on-error: true
+  #       env:
+  #         DEFAULT_BRANCH: main
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #         FILTER_REGEX_EXCLUDE: '^target/.*'        
+
+  run_unit_tests_integration_pipe:
+    runs-on: ubuntu-latest
+    # needs: super-lint
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: maven
+        node-version: 16
+    - name: Run unit tests
+      run: mvn -B test --file pom.xml
+
+  run_CI_Vulnerabilities_scan:
+    runs-on: ubuntu-latest
+    needs: run_unit_tests_integration_pipe
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: maven
+        node-version: 16
+    - name: Calculate code coverage
+      run: mvn clean verify jacoco:report "-Ddependency-check.skip=true"
+    - name: Archive code coverage results
+      uses: actions/upload-artifact@v2
+      with:
+        name: code-coverage-report
+        path: target/site/jacoco/
+        retention-days: 7
+  build:
+    runs-on: ubuntu-latest
+    needs: run_unit_tests_integration_pipe
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: maven
+        node-version: 16
+    - name: Build with Maven
+      run: mvn clean install "-DskipTests" "-Djacoco.skip=true" "-Ddependency-check.skip=true"
+    - name: Upload artifact for deployment job
+      uses: actions/upload-artifact@v2
+      with:
+        name: java-app
+        path: '${{ github.workspace }}/target/*.jar'  
