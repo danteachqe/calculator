@@ -1,0 +1,32 @@
+# Create a new file called "testdata.jsonl"
+touch testdata.jsonl
+
+# Open the file in VS Code
+code testdata.jsonl
+
+# Add the JSON data to the file
+echo '{
+  "number1": 10,
+  "number2": 20,
+  "operation": "add"
+}
+
+{
+  "number1": "abc",
+  "number2": 20,
+  "operation": "add"
+}
+
+{
+  "number1": 10,
+  "number2": 20,
+  "operation": "eval"
+}
+
+{
+  "number1": 10,
+  "number2": 20,
+  "operation": "add"
+}' >> testdata.jsonl
+
+# Save the file

@@ -1,0 +1,32 @@
+{
+    "info": {
+      "name": "Calculator Tests",
+      "version": "1.0.0"
+    },
+    "item": [
+      {
+        "name": "Test addition",
+        "request": {
+          "url": "http://localhost:80/calculate",
+          "method": "POST",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": {
+            "operation": "add",
+            "number1": 10,
+            "number2": 20
+          }
+        },
+        "response": {
+          "status": 200,
+          "body": {
+            "result": 30
+          }
+        }
+      }
+    ]
+  }
