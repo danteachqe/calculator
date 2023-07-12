@@ -36,7 +36,7 @@
               </elementProp>
             </collectionProp>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">localhost</stringProp>
+          <stringProp name="HTTPSampler.domain">http://playground1.azurewebsites.net</stringProp>
           <stringProp name="HTTPSampler.port">80</stringProp>
           <stringProp name="HTTPSampler.path">/calculate</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
