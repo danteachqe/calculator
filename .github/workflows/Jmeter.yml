@@ -1,4 +1,4 @@
-name: Performance Tests
+name: Jmeter
 
 on: 
   workflow_dispatch:
