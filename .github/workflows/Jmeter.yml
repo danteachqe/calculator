@@ -16,8 +16,8 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y wget default-jdk-headless unzip
           wget https://downloads.apache.org//jmeter/binaries/apache-jmeter-5.4.1.tgz
-          tar -xzf apache-jmeter-5.4.1.tgz
-          sudo mv apache-jmeter-5.4.1 /opt/jmeter
+          tar -xzf apache-jmeter-5.6.1.tgz
+          sudo mv apache-jmeter-5.6.1 /opt/jmeter
           sudo ln -s /opt/jmeter/bin/jmeter /usr/bin/jmeter
 
       - name: Run JMeter tests
