@@ -22,3 +22,9 @@ jobs:
 
       - name: Run JMeter tests
         run: jmeter -n -t src/test/Jmeter/Test.jmx -l results.jtl
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v2
+        with:
+          name: jmeter-results
+          path: results.jtl
