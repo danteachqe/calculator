@@ -7,8 +7,7 @@ on:
 jobs:
   super-lint:
     runs-on: ubuntu-latest
-    if: env.RUN_SUPER_LINTER == 'true'
-    steps:
+      steps:
       - name: Checkout repository code
         uses: actions/checkout@v2
 
