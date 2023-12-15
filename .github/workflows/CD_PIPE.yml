@@ -64,24 +64,24 @@
 #     - name: Display downloaded files
 #       run: ls -R
       
-#   postman_tests:
-#     runs-on: ubuntu-latest
-#     needs: deploy
-#     steps:
-#     - name: Checkout repository code
-#       uses: actions/checkout@v2
+# #   postman_tests:
+# #     runs-on: ubuntu-latest
+# #     needs: deploy
+# #     steps:
+# #     - name: Checkout repository code
+# #       uses: actions/checkout@v2
 
-#     - name: Wait for 10 seconds
-#       run: sleep 10s
+# #     - name: Wait for 10 seconds
+# #       run: sleep 10s
 
-#     - name: Set up Node.js
-#       uses: actions/setup-node@v2
-#       with:
-#         node-version: 14
+# #     - name: Set up Node.js
+# #       uses: actions/setup-node@v2
+# #       with:
+# #         node-version: 14
 
-#     - name: Install newman
-#       run: npm install -g newman
+# #     - name: Install newman
+# #       run: npm install -g newman
 
-#     - name: Run Postman tests
-#       run: newman run ${{ github.workspace }}/src/test/Postman_Tests/Calculate.postman_collection.json
+# #     - name: Run Postman tests
+# #       run: newman run ${{ github.workspace }}/src/test/Postman_Tests/Calculate.postman_collection.json
  
