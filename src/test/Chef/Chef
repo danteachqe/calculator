@@ -1,0 +1,10 @@
+control 'azure-web-app' do
+  impact 1.0
+  title 'Check Azure Web App settings'
+
+  describe azure_web_app(resource_group: 'your_resource_group', name: 'your_web_app_name') do
+    its('properties.enabled') { should cmp true }
+    its('properties.httpsOnly') { should cmp true }
+    # Add more checks as needed
+  end
+end
