@@ -24,4 +24,4 @@ jobs:
         curl https://omnitruck.chef.io/install.sh | sudo bash -s -- -P inspec
 
     - name: Run InSpec Tests
-      run: inspec exec path/to/your/tests --reporter cli
+      run: inspec exec src/test/Chef/Chef --reporter cli
