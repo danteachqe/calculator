@@ -101,7 +101,7 @@ jobs:
         
   build:
     runs-on: ubuntu-latest
-    needs: run_CI_Vulnerabilities_scan
+    needs: Chef_inspec_Tests
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 11
