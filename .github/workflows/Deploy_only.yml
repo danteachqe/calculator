@@ -95,6 +95,7 @@ jobs:
   deploy_master:
     runs-on: ubuntu-latest
     needs: build_master
+    if: success()
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
