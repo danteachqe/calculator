@@ -112,7 +112,7 @@ jobs:
         app-name: 'playground1'
         slot-name: 'Production'
         publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0BEA4837F01F4E4D9BCEE1ADAE79D999 }}
-        package: '*.jar'
+        package: 'java-app1.jar'
 
     - name: Display downloaded files
       run: ls -R
