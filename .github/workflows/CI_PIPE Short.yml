@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run Unit Tests
-        run: # Add your command for running unit tests here
+        run: echo "Running unit tests..." # Replace with your unit test command
 
   run-coverage:
     needs: run-unit-tests
@@ -17,8 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run Coverage
-        run: # Add your command for running coverage here
-        id: coverage
+        run: echo "Running coverage..." # Replace with your coverage command
 
   autoheal-tests:
     needs: run-coverage
@@ -27,4 +26,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Autoheal Tests
-        run: # Add your command for autohealing tests here
+        run: echo "Autohealing tests..." # Replace with your autoheal test command
