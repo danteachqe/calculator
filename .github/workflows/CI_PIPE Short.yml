@@ -4,46 +4,27 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+  run-unit-tests:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Run Unit Tests
-      run: # Add your command for running unit tests here
+      - uses: actions/checkout@v2
+      - name: Run Unit Tests
+        run: # Add your command for running unit tests here
 
-    - name: Run Coverage
-      run: # Add your command for running coverage here
-      id: coverage
-
-    - name: Auto Make Coverage
-      if: failure() && steps.coverage.outcome == 'failure'
-      run: # Add your command for auto making coverage here
-
-    - name: Rerun Coverage
-      if: always() && steps.coverage.outcome == 'failure'
-      run: # Add your command for rerunning coverage here
-
-  build:
-    needs: test
+  run-coverage:
+    needs: run-unit-tests
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Build
-      run: # Add your command for build here
-      id: build
+      - uses: actions/checkout@v2
+      - name: Run Coverage
+        run: # Add your command for running coverage here
+        id: coverage
 
-    - name: Autoheal
-      if: failure() && steps.build.outcome == 'failure'
-      run: # Add your command for autoheal here
-
-    - name: Rebuild
-      if: always() && steps.build.outcome == 'failure'
-      run: # Add your command for rebuild here
-
-  deploy:
-    needs: build
+  autoheal-tests:
+    needs: run-coverage
+    if: failure() && needs.run-coverage.result == 'failure'
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Deploy
-      run: # Add your command for deploy here
+      - uses: actions/checkout@v2
+      - name: Autoheal Tests
+        run: # Add your command for autohealing tests here
