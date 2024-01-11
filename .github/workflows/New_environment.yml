@@ -49,19 +49,15 @@ jobs:
     - name: Display downloaded files
       run: ls -R
 
-  load-test:
+  k6_load_test:
+    name: k6 Load Test
     runs-on: ubuntu-latest
-    needs: deploy  # Ensures load testing happens after deployment
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v1
 
-      - name: Set up k6
-        run: |
-          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61
-          echo "deb https://k6.io/repo/ stable main" | sudo tee /etc/apt/sources.list.d/k6.list
-          sudo apt-get update
-          sudo apt-get install k6
-
-      - name: Run k6 performance tests
-        run: k6 run ${{ github.workspace }}/src/test/k6/perftest.js 
+      - name: Run local k6 test
+        uses: grafana/k6-action@v0.2.0
+        with:
+          filename: ${{ github.workspace }}/src/test/K6/perftest.js
