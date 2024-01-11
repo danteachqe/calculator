@@ -5,7 +5,7 @@ export let options = {
   stages: [
     { duration: '20s', target: 50 },   // Phase 1: Ramp-up to 100 VUs over 20 seconds
     { duration: '20s', target: 100 },   // Phase 2: Ramp-up to 500 VUs over 20 seconds
-    { duration: '15s', target: 150 },  // Phase 3: Ramp-up to 1800 VUs over 15 seconds
+    { duration: '15s', target: 100 },  // Phase 3: Ramp-up to 1800 VUs over 15 seconds
     { duration: '15s', target: 100 },   // Phase 4: Ramp-down to 500 VUs over 15 seconds
     { duration: '10s', target: 0 },     // Phase 5: Ramp-down to 0 VUs over 10 seconds
   ],
