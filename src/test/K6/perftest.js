@@ -3,42 +3,32 @@ import { sleep, check } from 'k6';
 
 export let options = {
   stages: [
-    // Phase 1: 400 requests/second for 60 seconds
-    { duration: '20s', target: 100 },
-
-    // Phase 2: 700 requests/second for 20 seconds
-    { duration: '20s', target: 500 },
-
-    // Phase 3: 300 requests/second for the remaining time (80 seconds)
-    { duration: '15s', target: 1800 },
-
-    { duration: '15s', target: 500 },
-
-    { duration: '10s', target: 0 },
+    { duration: '20s', target: 100 },   // Phase 1: Ramp-up to 100 VUs over 20 seconds
+    { duration: '20s', target: 200 },   // Phase 2: Ramp-up to 500 VUs over 20 seconds
+    { duration: '15s', target: 300 },  // Phase 3: Ramp-up to 1800 VUs over 15 seconds
+    { duration: '15s', target: 100 },   // Phase 4: Ramp-down to 500 VUs over 15 seconds
+    { duration: '10s', target: 0 },     // Phase 5: Ramp-down to 0 VUs over 10 seconds
   ],
+  thresholds: {
+    'http_req_duration': ['avg<=100', 'p(90)<=250'],  // Thresholds for response times
+  },
 };
 
 export default function () {
-  // Define the request payload
   let payload = JSON.stringify({
-    operation: 'divide', // Change the operation as needed
-    number1: 5, // Change the numbers as needed
+    operation: 'divide',
+    number1: 5,
     number2: 9,
   });
 
-  // Set the request headers
   let headers = {
     'Content-Type': 'application/json',
   };
 
-  // Send the POST request to your local web service on port 8080
   let response = http.post('https://playground1.azurewebsites.net/calculate', payload, { headers: headers });
 
-  // Check for a successful response (HTTP status code 200)
   check(response, {
-    'is status 200': (r) => r.status === 200,
+    'is status 200': (r) => r.status === 200,  // Check for HTTP 200 response
   });
-
-  // Sleep for a short duration between requests (adjust as needed)
-  sleep(0.1); // Sleep for 100 milliseconds
+  
 }
