@@ -1,11 +1,11 @@
 name: Nightly Build Faster
 
-# on:
-#   workflow_dispatch:
+on:
+  workflow_dispatch:
   
-on:  
-  push:
-    branches: [ "master" ]
+# on:  
+#   push:
+#     branches: [ "master" ]
 
 jobs:  
   super-lint:
