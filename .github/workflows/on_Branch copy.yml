@@ -1,8 +1,8 @@
 name: Feature Workflow improvement
 
-on:  
-  push:
-    branches: [ "master" ]
+# on:  
+#   push:
+#     branches: [ "master" ]
 # on:
 #     workflow_dispatch:
 

@@ -115,6 +115,7 @@ jobs:
 
     - name: Display downloaded files
       run: ls -R
+
   postman_tests:
     runs-on: ubuntu-latest
     needs: deploy_functional
@@ -135,6 +136,7 @@ jobs:
 
     - name: Run Postman tests
       run: newman run ${{ github.workspace }}/src/test/Postman_Tests/Calculate.postman_collection.json
+
   deploy_performance:
     runs-on: ubuntu-latest
     needs: build
@@ -162,6 +164,7 @@ jobs:
 
     - name: Display downloaded files
       run: ls -R
+
   lighthouse_check:
     runs-on: ubuntu-latest
     needs: deploy_performance
@@ -188,3 +191,52 @@ jobs:
             echo "error: Performance score is below 80. Blocking PR."
             exit 1
           fi
+  performance_tests_lighthouse:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install JMeter
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget default-jdk-headless unzip
+          wget https://downloads.apache.org//jmeter/binaries/apache-jmeter-5.6.1.tgz
+          tar -xzf apache-jmeter-5.6.1.tgz
+          sudo mv apache-jmeter-5.6.1 /opt/jmeter
+          sudo ln -s /opt/jmeter/bin/jmeter /usr/bin/jmeter
+
+      - name: Run JMeter tests
+        run: jmeter -n -t src/test/Jmeter/Test.jmx -l results.jtl
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v2
+        with:
+          name: jmeter-results
+          path: results.jtl
+
+  Jmeter_tests:
+    runs-on: ubuntu-latest
+    needs: deploy_performance
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install JMeter
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget default-jdk-headless unzip
+          wget https://downloads.apache.org//jmeter/binaries/apache-jmeter-5.6.1.tgz
+          tar -xzf apache-jmeter-5.6.1.tgz
+          sudo mv apache-jmeter-5.6.1 /opt/jmeter
+          sudo ln -s /opt/jmeter/bin/jmeter /usr/bin/jmeter
+
+      - name: Run JMeter tests
+        run: jmeter -n -t src/test/Jmeter/Test.jmx -l results.jtl
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v2
+        with:
+          name: jmeter-results
+          path: results.jtl
