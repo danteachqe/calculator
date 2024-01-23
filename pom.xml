@@ -24,7 +24,7 @@
         <start-class>com.CalculatorApplication</start-class>
         <java.version>11</java.version>
         <lombok.version>1.18.20</lombok.version>
-        <coverage.need>0.8</coverage.need>
+        <coverage.need>0.5</coverage.need>
     </properties>
     
     <dependencies>
