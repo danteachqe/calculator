@@ -54,7 +54,22 @@ jobs:
           cache: maven
           
       - name: Build with Maven
-        run: mvn dependency-check:check -DskipTests
+        run: mvn clean verify jacoco:report "-Ddependency-check.skip=true"
+      
+  # super-lint:
+  #   runs-on: ubuntu-latest
+  
+  #   steps:
+  #     - name: Checkout repository code
+  #       uses: actions/checkout@v2
+
+  #     - name: Run Super-Linter
+  #       uses: github/super-linter@v4
+  #       continue-on-error: true
+  #       env:
+  #         DEFAULT_BRANCH: main
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #         FILTER_REGEX_EXCLUDE: '^target/.*' 
 
 
 #   build:
