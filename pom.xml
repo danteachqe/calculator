@@ -156,7 +156,7 @@
             </plugin>
             
            <!-- OWASP Dependency Check Maven Plugin -->
-            <!-- <plugin>
+            <plugin>
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
                 <version>9.0.9</version>
@@ -167,11 +167,11 @@
                             <goal>check</goal>
                         </goals>
                         <configuration>
-                            <failBuildOnCVSS>11</failBuildOnCVSS>
+                            <failBuildOnCVSS>9</failBuildOnCVSS>
                         </configuration>
                     </execution>
                 </executions>
-            </plugin> -->
+            </plugin>
             
         </plugins>
     </build>
