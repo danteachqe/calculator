@@ -21,7 +21,7 @@ public class CalculatorController {
                 result = request.getNumber1() * request.getNumber2();
                 break;
             case "divide":
-                result = request.getNumber1() / request.getNumber2();
+                result = request.getNumber1() / request.getNumber2(); //comment
                 break;
 
             case "area":
