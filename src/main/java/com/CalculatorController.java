@@ -28,7 +28,7 @@ public class CalculatorController {
                 result =0.5 * request.getNumber1() * request.getNumber2();
                 break;
             default:
-                throw new IllegalArgumentException("Invalid operation"); //Comment
+                throw new IllegalArgumentException("Invalid operation"); 
         }
 
         return new CalculationResult(result);
