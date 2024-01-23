@@ -15,8 +15,8 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
-          cache: maven
-          node-version: 16
+          cache: maven  
+                
       - name: Run unit tests
         run: mvn test
 
