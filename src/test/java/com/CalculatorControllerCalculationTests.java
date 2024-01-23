@@ -62,6 +62,17 @@ public class CalculatorControllerCalculationTests {
     }
 
     @Test
+    public void testArea() {
+        CalculationRequest request = new CalculationRequest(10, 5, "area");
+        double expected = 25;
+
+        CalculatorController controller = new CalculatorController();
+        CalculationResult result = controller.calculate(request);
+
+        assertEquals(expected, result.getResult(), 0.001);
+    }
+
+       @Test
     public void testInvalidOperation() {
         CalculationRequest request = new CalculationRequest(2, 3, "invalid");
 

@@ -9,7 +9,7 @@ public class CalculatorTests {
                 .contentType("application/json")
                 .body("{ \"operation\": \"add\", \"number1\": 10, \"number2\": 20 }")
         .when()
-                .post("http://localhost:80/calculate")
+                .post("http://localhost:8080/calculate")
         .then()
                 .statusCode(200)
                 .body("result", is(30.0F))
