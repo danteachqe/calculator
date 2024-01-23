@@ -1,9 +1,0 @@
-<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.4.1"><hashTree><TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true" /><hashTree><ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="true"><elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true"><intProp name="LoopController.loops">1</intProp></elementProp></ThreadGroup><HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request" enabled="true"><stringProp name="HTTPSampler.domain">api.openai.com</stringProp><stringProp name="HTTPSampler.port" /><stringProp name="HTTPSampler.protocol">https</stringProp><stringProp name="HTTPSampler.path">/v1/chat/completions</stringProp><stringProp name="HTTPSampler.method">POST</stringProp><stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp><stringProp name="HTTPSampler.postBodyRaw">true</stringProp><elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true"><elementProp name="" elementType="HTTPArgument"><boolProp name="HTTPArgument.always_encode">false</boolProp><stringProp name="Argument.value">{
-  "model": "gpt-4-1106-preview",
-  "messages": [
-    {
-      "role": "user",
-      "content": "how many tokens are in this message?"
-    }
-  ]
-}</stringProp></elementProp></elementProp></HTTPSamplerProxy><ResultCollector testclass="ResultCollector" testname="View Results Tree" enabled="true" /></hashTree></hashTree></jmeterTestPlan>
