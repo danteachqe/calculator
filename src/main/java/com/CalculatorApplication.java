@@ -15,6 +15,6 @@ public class CalculatorApplication {
     // Example of using org.owasp.encoder to encode user input
     String userInput = "<script>alert('XSS attack!');</script>";
     String encodedInput = Encode.forHtml(userInput);
-    System.out.println(encodedInput);    
+    System.out.println(encodedInput);     //coment
     }
 }
