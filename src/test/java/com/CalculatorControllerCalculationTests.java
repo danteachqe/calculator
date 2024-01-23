@@ -53,7 +53,7 @@ public class CalculatorControllerCalculationTests {
     @Test
     public void testDivide() {
         CalculationRequest request = new CalculationRequest(10, 5, "divide");
-        double expected = 2;
+        double expected = 3;
 
         CalculatorController controller = new CalculatorController();
         CalculationResult result = controller.calculate(request);
