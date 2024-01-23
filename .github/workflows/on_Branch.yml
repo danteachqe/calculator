@@ -1,6 +1,6 @@
 name: Feature Workflow
 
-  on:
+on:
   push:
     branches-ignore:
       - 'master'
