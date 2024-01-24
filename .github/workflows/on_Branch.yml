@@ -52,9 +52,28 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
           cache: maven
-          
-      - name: Build with Maven
-        run: mvn clean verify jacoco:report "-Ddependency-check.skip=true"
+
+      - name: Cache OWASP Dependency Check Data
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.m2
+            ~/.dependency-check
+          key: ${{ runner.os }}-owasp-data-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-owasp-data-
+
+      - name: Owasp Dependency Check
+        run: mvn dependency-check:check
+
+      - name: Upload Dependency Check Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: dependency-check-report
+          path: |
+            target/dependency-check-report.html
+            target/dependency-check-report.xml
+
       
   super-lint:
     runs-on: ubuntu-latest
@@ -70,7 +89,14 @@ jobs:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           FILTER_REGEX_EXCLUDE: '^target/.*' 
-
+      - name: Upload Dependency Check Report
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: dependency-check-report
+          path: |
+           target/dependency-check-report.html
+           target/dependency-check-report.xml
 
 #   build:
 #     runs-on: ubuntu-latest
