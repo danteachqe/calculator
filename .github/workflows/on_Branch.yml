@@ -94,9 +94,8 @@ jobs:
         uses: actions/upload-artifact@v2
         if: always()
         with:
-          name: superlinter logs
-          path: |           
-           .github/linters
+          name: superlinter logs         
+          path: .superlinter/**/*
 
 #   build:
 #     runs-on: ubuntu-latest
