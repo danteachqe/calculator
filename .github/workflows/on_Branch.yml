@@ -97,6 +97,7 @@ jobs:
           path: |
            target/dependency-check-report.html
            target/dependency-check-report.xml
+           .github/linters
 
 #   build:
 #     runs-on: ubuntu-latest
