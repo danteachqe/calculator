@@ -109,6 +109,31 @@ jobs:
           name: java-app
           path: '${{ github.workspace }}/target/*.jar'
 
+  deploy_feature:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    
+    steps:
+    - name: Download artifact from build job
+      uses: actions/download-artifact@v2
+      with:
+        name: java-app
+
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'playground1'
+        slot-name: 'Production'
+        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0BEA4837F01F4E4D9BCEE1ADAE79D999 }}
+        package: '*.jar'
+
+    - name: Display downloaded files
+      run: ls -R          
+
 # name: Feature Branch Workflow
 
 # on:
