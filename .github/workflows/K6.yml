@@ -1,0 +1,19 @@
+# k6_load_test:
+#     name: k6 Load Test
+#     runs-on: ubuntu-latest
+  
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v1
+  
+#       - name: Run local k6 test
+#         uses: grafana/k6-action@v0.2.0
+#         with:
+#           filename: ${{ github.workspace }}/src/test/K6/perftest.js
+#           flags: --out json=results.json
+
+#       - name: Upload performance test results
+#         uses: actions/upload-artifact@v3
+#          with:
+#           name: k6-report
+#           path: results.json
