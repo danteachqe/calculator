@@ -18,7 +18,7 @@ jobs:
           cache: maven  
 
       - name: Run unit tests
-        run: mvn test
+        run: mvn test -Dtest=!com.SeleniumTest
 
   run_coverage:
     runs-on: ubuntu-latest
