@@ -33,7 +33,7 @@ jobs:
           cache: maven
          
       - name: Calculate code coverage
-        run: mvn clean verify jacoco:report "-DskipTests" "-Ddependency-check.skip=true"
+        run: mvn jacoco:report "-DskipTests" "-Ddependency-check.skip=true"
       - name: Archive code coverage results
         uses: actions/upload-artifact@v2
         with:
