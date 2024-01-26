@@ -18,7 +18,7 @@ jobs:
           cache: maven  
 
       - name: Run unit tests
-        run: mvn test -Dtest=!com.SeleniumTest
+        run: mvn test -Dtest=CalculatorControllerCalculationTests
 
   run_coverage:
     runs-on: ubuntu-latest
@@ -87,7 +87,7 @@ jobs:
           cache: maven  
 
       - name: Run Super Linter
-        run: mvn test -Dtest=!com.SeleniumTest
+        run: mvn test -Dtest=CalculatorControllerCalculationTests
 
   build:
     runs-on: ubuntu-latest
@@ -134,6 +134,19 @@ jobs:
     - name: Display downloaded files
       run: ls -R          
 
+  run_Restassured_API:
+    runs-on: ubuntu-latest  
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: maven  
+
+      - name: Run API Tests
+        run: mvn test -Dtest="com.rest.*Tests"      
 # name: Feature Branch Workflow
 
 # on:
