@@ -157,6 +157,35 @@ jobs:
             with:
               name: surefire-reports
               path: target/site/surefire-report.html
+
+  postman_tests:
+    runs-on: ubuntu-latest
+    needs: deploy_feature    
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Install newman
+        run: npm install -g newman
+
+      - name: Install newman-reporter-html
+        run: npm install -g newman-reporter-html
+
+      - name: Run Postman tests
+        run: newman run ${{ github.workspace }}/src/test/Postman_Tests/Calculate.postman_collection.json -r html --reporter-html-export report.html
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v2
+        with:
+          name: postman-report
+          path: report.html
+
+
 # name: Feature Branch Workflow
 
 # on:
