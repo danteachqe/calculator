@@ -1,0 +1,5 @@
+result,requestName,executed,method,url,code,responseTime,body
+passed,"Adition","Check if result field exists and its value is equal to 10","POST","http://playground1.azurewebsites.net/calculate","200","218","{""result"":10.0}"
+passed,"Sustract","Check if result field exists and its value is equal to 2","POST","http://playground1.azurewebsites.net/calculate","200","63","{""result"":2.0}"
+passed,"Multiply","Check if result field exists and its value is equal to 15","POST","http://playground1.azurewebsites.net/calculate","200","60","{""result"":15.0}"
+passed,"Division","Check if result field exists and its value is equal to 1.6","POST","http://playground1.azurewebsites.net/calculate","200","62","{""result"":1.6666666666666667}"
