@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "newman": "^6.1.0",
     "node-fetch": "^2.7.0"
   }
 }

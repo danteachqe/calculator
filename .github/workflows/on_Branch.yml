@@ -147,7 +147,16 @@ jobs:
               cache: maven  
     
           - name: Run unit tests
-            run: mvn test -Dtest="com.rest.*Tests"     
+            run: mvn test -Dtest="com.rest.*Tests"
+
+          - name: Generate Surefire Report
+            run: mvn surefire-report:report
+
+          - name: Upload Surefire HTML Report
+            uses: actions/upload-artifact@v2
+            with:
+              name: surefire-reports
+              path: target/site/surefire-report.html
 # name: Feature Branch Workflow
 
 # on:
