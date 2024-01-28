@@ -19,7 +19,7 @@ public class SeleniumTest {
 
     @BeforeEach
     public void setUp() {
-        WebDriverManager.firefoxdriver().setup();
+        WebDriverManager.firefoxdriver().driverVersion("0.30.0").setup();
     
         FirefoxOptions options = new FirefoxOptions();
         options.setHeadless(true);
