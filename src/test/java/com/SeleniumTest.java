@@ -8,6 +8,8 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 
@@ -18,7 +20,11 @@ public class SeleniumTest {
     @BeforeEach
     public void setUp() {
         WebDriverManager.firefoxdriver().setup();
-        driver = new FirefoxDriver();
+    
+        FirefoxOptions options = new FirefoxOptions();
+        options.setHeadless(true);
+    
+        driver = new FirefoxDriver(options);
         driver.manage().window().setSize(new Dimension(1313, 1080));
     }
 
