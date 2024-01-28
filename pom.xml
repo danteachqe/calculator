@@ -45,20 +45,21 @@
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
-            <version>5.0.3</version> <!-- Use the latest version available -->
+            <version>5.0.3</version> 
             <scope>test</scope>
         </dependency>       
-
+<!-- Selenium -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-opera-driver</artifactId>
-            <version>4.1.0</version> <!-- Use the latest version available -->
+            <version>4.1.0</version> 
         </dependency>
 
+<!-- Selenium Driver -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>4.10.0</version> <!-- Replace with the latest version -->
+            <version>4.10.0</version> 
         </dependency>
         
         <!-- Database Dependency -->

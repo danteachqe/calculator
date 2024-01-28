@@ -109,7 +109,7 @@ jobs:
           name: java-app
           path: '${{ github.workspace }}/target/*.jar'
 
-  deploy_feature:
+  deploy_backend:
     runs-on: ubuntu-latest
     needs: build
     environment:
@@ -132,7 +132,15 @@ jobs:
         package: '*.jar'
 
     - name: Display downloaded files
-      run: ls -R          
+      run: ls -R
+      
+  deploy_front_end:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run Unit Tests
+        run: echo "Running unit tests..." # Replace with your unit test command
 
   run_RestA_Tests:
         runs-on: ubuntu-latest  

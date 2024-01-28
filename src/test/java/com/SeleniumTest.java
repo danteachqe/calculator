@@ -18,8 +18,7 @@ public class SeleniumTest {
     @BeforeEach
     public void setUp() {
         WebDriverManager.firefoxdriver().setup();
-        driver = new FirefoxDriver();
-        driver.manage().window().setSize(new Dimension(1313, 1080));
+        driver = new FirefoxDriver();       
     }
 
     @Test
@@ -104,7 +103,7 @@ public class SeleniumTest {
         // 23 | click | css=.btn-primary |
         driver.findElement(By.cssSelector(".btn-primary")).click();
         try {
-    Thread.sleep(5000); // Sleep for 5 seconds (5000 milliseconds)
+    Thread.sleep(3000); // Sleep for 5 seconds (5000 milliseconds)
 } catch (InterruptedException e) {
     e.printStackTrace();
 }
