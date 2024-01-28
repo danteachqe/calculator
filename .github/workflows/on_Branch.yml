@@ -144,7 +144,7 @@ jobs:
 
   run_RestA_Tests:
         runs-on: ubuntu-latest  
-        needs: deploy_feature
+        needs: deploy_backend
         steps:
           - uses: actions/checkout@v2
           - name: Set up JDK 11
@@ -168,7 +168,7 @@ jobs:
 
   postman_tests:
     runs-on: ubuntu-latest
-    needs: deploy_feature    
+    needs: deploy_backend    
     steps:
       - name: Checkout repository code
         uses: actions/checkout@v2
