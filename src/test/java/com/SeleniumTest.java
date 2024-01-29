@@ -9,8 +9,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
@@ -19,21 +17,15 @@ public class SeleniumTest {
 
     private WebDriver driver;
 
-   @BeforeEach
+    @BeforeEach
     public void setUp() {
         WebDriverManager.firefoxdriver().driverVersion("0.30.0").setup();
-
+    
         FirefoxOptions options = new FirefoxOptions();
         options.setHeadless(true);
-
+    
         driver = new FirefoxDriver(options);
         driver.manage().window().setSize(new Dimension(1313, 1080));
-
-        // Set page load timeout
-        driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
-
-        // Set script timeout
-        driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
     }
 
     @Test

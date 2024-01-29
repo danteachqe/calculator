@@ -5,7 +5,7 @@ on:
 
 jobs:
   run-selenium-tests:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - name: Checkout repository
@@ -14,20 +14,19 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
-          java-version: '11' # Set your JDK version
+          java-version: '11'
           distribution: 'temurin'
 
       - name: Cache Maven packages
         uses: actions/cache@v2
         with:
-            path: ~/.m2
+            path: ~\.m2
             key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
             restore-keys: ${{ runner.os }}-m2
 
       - name: Install Firefox
         run: |
-          sudo apt-get update
-          sudo apt-get install -y firefox
+          choco install firefox
 
       - name: Run Selenium tests
         run:  mvn test -Dtest=SeleniumTest
