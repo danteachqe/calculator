@@ -118,6 +118,7 @@ jobs:
 
     - name: Display downloaded files
       run: ls -R
+
   postman_tests:
     runs-on: ubuntu-latest
     needs: deploy_functional
@@ -138,6 +139,7 @@ jobs:
 
     - name: Run Postman tests
       run: newman run ${{ github.workspace }}/src/test/Postman_Tests/Calculate.postman_collection.json
+
   deploy_performance:
     runs-on: ubuntu-latest
     needs: build
