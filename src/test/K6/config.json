@@ -1,0 +1,5 @@
+{
+  "TEST_URL": "https://playground1.azurewebsites.net/calculate",
+  "AVG_THRESHOLD": "100",
+  "P90_THRESHOLD": "250"
+}
