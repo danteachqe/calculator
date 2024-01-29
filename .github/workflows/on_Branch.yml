@@ -195,30 +195,33 @@ jobs:
           name: postman-report
           path: report.html
 
-  selenium_Tests:
-        runs-on: ubuntu-latest  
-        needs: [deploy_backend,deploy_front_end]
-        steps:
-          - uses: actions/checkout@v2
-          - name: Set up JDK 11
-            uses: actions/setup-java@v2
-            with:
-              java-version: '11'
-              distribution: 'temurin'
-              cache: maven
-                
-    
-          - name: Run unit tests
-            run: mvn test -Dtest=SeleniumTest
+  run-selenium-tests:
+    runs-on: windows-latest
+    needs: [deploy_backend,deploy_front_end]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-          - name: Generate Surefire Report
-            run: mvn surefire-report:report
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'temurin'
 
-          - name: Upload Surefire HTML Report
-            uses: actions/upload-artifact@v2
-            with:
-              name: surefire-reports
-              path: target/site/surefire-report.html
+      - name: Cache Maven packages
+        uses: actions/cache@v2
+        with:
+            path: ~\.m2
+            key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+            restore-keys: ${{ runner.os }}-m2
+
+      - name: Install Firefox
+        run: |
+          choco install firefox
+
+      - name: Run Selenium tests
+        run:  mvn test -Dtest=SeleniumTest
+
 
 # name: Feature Branch Workflow
 
