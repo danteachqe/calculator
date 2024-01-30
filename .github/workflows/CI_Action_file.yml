@@ -134,6 +134,10 @@ jobs:
           distribution: 'temurin'
           cache: maven  
 
+      - name: Configure Git
+        run: |
+            git config user.email "you@example.com"
+            git config user.name "Your Name"
       - name: Merge master branch
         run: |
           git fetch origin master
