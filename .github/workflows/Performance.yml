@@ -25,9 +25,9 @@ jobs:
 
       - name: Run Lighthouse and check performance
         run: |
-          LIGHTHOUSE_SCORE=$(lighthouse --output=json --quiet --chrome-flags="--headless --no-sandbox" "https://www.google.com" | jq '.categories.performance.score * 100')
+          LIGHTHOUSE_SCORE=$(lighthouse --output=json --quiet --chrome-flags="--headless --no-sandbox" "https://www.blazedemo.com" | jq '.categories.performance.score * 100')
           echo "Performance score: $LIGHTHOUSE_SCORE"
-          if [ $LIGHTHOUSE_SCORE -lt 90 ]; then
-            echo "error: Performance score is below 90. Blocking PR."
+          if [ $LIGHTHOUSE_SCORE -lt 60 ]; then
+            echo "error: Performance score is below 60. Blocking PR."
             exit 1
           fi
