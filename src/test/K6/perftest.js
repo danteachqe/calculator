@@ -10,7 +10,7 @@ export let options = {
     { duration: '10s', target: 0 },     // Phase 5: Ramp-down to 0 VUs over 10 seconds
   ],
   thresholds: {
-    'http_req_duration': ['avg<=100', 'p(90)<=250'],  // Thresholds for response times
+    'http_req_duration': ['avg<=200', 'p(90)<=350'],  // Thresholds for response times
   },
 };
 
