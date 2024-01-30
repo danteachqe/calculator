@@ -137,7 +137,7 @@ jobs:
       - name: Merge master branch
         run: |
           git fetch origin master
-          git merge origin/master
+          git merge origin/master --allow-unrelated-histories
 
       - name: Run unit tests
         run: mvn test -Dtest=CalculatorControllerCalculationTests          
