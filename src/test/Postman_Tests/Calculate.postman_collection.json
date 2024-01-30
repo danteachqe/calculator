@@ -15,7 +15,7 @@
 							"pm.test(\"Check if result field exists and its value is equal to 10\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData).to.have.property('result');\r",
-							"    pm.expect(jsonData.result).to.equal(8);\r",
+							"    pm.expect(jsonData.result).to.equal(10);\r",
 							"});"
 						],
 						"type": "text/javascript"

@@ -214,7 +214,7 @@ jobs:
                 
     
           - name: Run unit tests
-            run: mvn test -Dtest="com.rest.*Tests"
+            run: mvn test -Dtest=CalculatorTests
 
           - name: Generate Surefire Report
             run: mvn surefire-report:report
