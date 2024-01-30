@@ -21,14 +21,14 @@ public class CalculatorController {
                 result = request.getNumber1() * request.getNumber2();
                 break;
             case "divide":
-                result = request.getNumber1() / request.getNumber2(); //comment
+                result = request.getNumber1() / request.getNumber2(); 
                 break;
 
             case "area":
                 result =0.5 * request.getNumber1() * request.getNumber2();
                 break;
             default:
-                throw new IllegalArgumentException("Invalid operation"); //comment
+                throw new IllegalArgumentException("Invalid operation"); 
         }
 
         return new CalculationResult(result);
