@@ -138,6 +138,7 @@ jobs:
         run: |
           git config --global user.email "you@example.com"
           git config --global user.name "Your Name"
+          
       - name: Merge master branch
         run: |
           git fetch origin master
