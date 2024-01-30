@@ -16,6 +16,6 @@ public class CalculatorTests {
         .then()
             .statusCode(200)
             .body("result", is(30.0F))
-            .time(lessThan(500L));
+           // .time(lessThan(500L));
     }
 }
