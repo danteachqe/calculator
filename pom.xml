@@ -45,20 +45,21 @@
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
-            <version>5.1.0</version> <!-- Use the latest version available -->
+            <version>5.0.3</version> 
             <scope>test</scope>
-        </dependency>       
-
+        </dependency>
+<!-- Selenium -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-opera-driver</artifactId>
-            <version>4.1.0</version> <!-- Use the latest version available -->
+            <version>4.1.0</version> 
         </dependency>
 
+<!-- Selenium Driver -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>4.10.0</version> <!-- Replace with the latest version -->
+            <version>4.10.0</version> 
         </dependency>
         
         <!-- Database Dependency -->
@@ -115,55 +116,69 @@
             
             <!-- JaCoCo Maven Plugin -->
             <plugin>
-    <groupId>org.jacoco</groupId>
-    <artifactId>jacoco-maven-plugin</artifactId>
-    <version>0.8.10</version>
-    <executions>
-        <execution>
-            <id>default-prepare-agent</id>
-            <goals>
-                <goal>prepare-agent</goal>
-            </goals>
-        </execution>
-        <execution>
-            <id>default-report</id>
-            <phase>prepare-package</phase>
-            <goals>
-                <goal>report</goal>
-            </goals>
-            <configuration>
-                <includes>
-                    <!-- Include only files under src/main/java -->
-                    <include>**/src/main/java/**/*.java</include>
-                </includes>
-            </configuration>
-        </execution>
-        <execution>
-            <id>default-check</id>
-            <goals>
-                <goal>check</goal>
-            </goals>
-            <configuration>
-                <rules>
-                    <rule>
-                        <element>BUNDLE</element>
-                        <limits>
-                            <limit>
-                                <counter>LINE</counter>
-                                <value>COVEREDRATIO</value>
-                                <minimum>${coverage.need}</minimum>
-                            </limit>
-                        </limits>
-                    </rule>
-                </rules>
-                <includes>
-                    <!-- Include only files under src/main/java -->
-                    <include>**/src/main/java/**/*.java</include>
-                </includes>
-            </configuration>
-        </execution>
-    </executions>
-</plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.10</version>
+                <executions>
+                    <execution>
+                        <id>default-prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>default-report</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <includes>
+                                <!-- Include only files under src/main/java -->
+                                <include>**/src/main/java/**/*.java</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>default-check</id>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <rule>
+                                    <element>BUNDLE</element>
+                                    <limits>
+                                        <limit>
+                                            <counter>LINE</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>${coverage.need}</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+                            </rules>
+                            <includes>
+                                <!-- Include only files under src/main/java -->
+                                <include>**/src/main/java/**/*.java</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
+                <dependencies>
+                   
+                    <dependency>
+                        <groupId>org.junit.jupiter</groupId>
+                        <artifactId>junit-jupiter-engine</artifactId>
+                        <version>5.7.0</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
             
             <!-- Maven Compiler Plugin -->
             <plugin>
@@ -182,13 +197,6 @@
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
-            
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.2.2</version>
-            </plugin>
-        
             
            <!-- OWASP Dependency Check Maven Plugin -->
             <plugin>
