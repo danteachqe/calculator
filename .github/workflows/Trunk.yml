@@ -74,17 +74,14 @@ jobs:
     if: ${{ failure() && github.ref == 'refs/heads/master' }} 
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0 # Necessary for revert
       - name: Configure Git
         run: |
-            git config --local user.email "actions@github.com"
-            git config --local user.name "GitHub Actions"
-            - name: Revert last commit
-            env:
-              MY_PERSONAL_TOKEN: ${{ secrets.MY_TOKEN }} 
-            run: |
-              git config --local user.email "actions@github.com"
-              git config --local user.name "GitHub Actions"
-              git revert --no-edit HEAD
-              git push https://danteachqe:${{ env.MY_TOKEN }}@github.com/danteachqe/calculator.git HEAD:master
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+      - name: Revert last commit
+        env:
+          MY_PERSONAL_TOKEN: ${{ secrets.MY_TOKEN }} # This should be defined in your repository's secrets
+        run: |
+          git revert --no-edit HEAD
+          git push https://${{ secrets.MY_TOKEN }}@github.com/danteachqe/calculator.git HEAD:master          
+  
