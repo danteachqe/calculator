@@ -104,7 +104,7 @@ jobs:
   k6_load_test:
     name: k6 Load Test
     runs-on: ubuntu-latest
-    needs: build
+    needs: deploy_Backend_performance
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -197,3 +197,56 @@ jobs:
 
       - name: Run Selenium tests
         run:  mvn test -Dtest=SeleniumTest          
+  
+  Revert_Deploy:
+    if: ${{ failure() }}
+    needs: [run-selenium-tests,postman_tests,run_RestA_Tests,k6_load_test,lighthouse_check]
+    runs-on: ubuntu-latest
+    
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    
+    steps:
+    - name: Download artifact from build job
+      uses: actions/download-artifact@v2
+      with:
+        name: java-app
+
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        
+        app-name: 'playground1'
+        slot-name: 'Production'
+        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0BEA4837F01F4E4D9BCEE1ADAE79D999 }}
+        package: '*.jar'
+
+    - name: Display downloaded files
+      run: ls -R      
+  Promote_production:
+    runs-on: ubuntu-latest
+    needs: [run-selenium-tests,postman_tests,run_RestA_Tests,k6_load_test,lighthouse_check]
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    
+    steps:
+    - name: Download artifact from build job
+      uses: actions/download-artifact@v2
+      with:
+        name: java-app
+
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        
+        app-name: 'playground1'
+        slot-name: 'Production'
+        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0BEA4837F01F4E4D9BCEE1ADAE79D999 }}
+        package: '*.jar'
+
+    - name: Display downloaded files
+      run: ls -R
