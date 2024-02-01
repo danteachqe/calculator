@@ -87,4 +87,4 @@ jobs:
               git config --local user.email "actions@github.com"
               git config --local user.name "GitHub Actions"
               git revert --no-edit HEAD
-              git push https://<username>:${{ env.MY_TOKEN }}@github.com/<username>/<repository>.git HEAD:master
+              git push https://danteachqa:${{ env.MY_TOKEN }}@github.com/danteachqa/calculator.git HEAD:master
