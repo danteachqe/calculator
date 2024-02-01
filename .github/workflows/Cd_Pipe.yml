@@ -20,15 +20,6 @@ jobs:
           distribution: 'temurin'
           cache: maven
           
-      - name: Configure Git
-        run: |
-            git config user.email "you@example.com"
-            git config user.name "Your Name"
-      - name: Merge master branch
-        run: |
-          git fetch origin master
-          git merge origin/master --allow-unrelated-histories
-         
       - name: Build with Maven
         run: mvn clean install "-DskipTests" "-Djacoco.skip=true" "-Ddependency-check.skip=true"
       - name: Upload artifact for deployment job
