@@ -15,9 +15,7 @@ public class CalculatorTests {
             .post("http://playground1.azurewebsites.net/calculate")
         .then()
             .statusCode(200)
-
             .body("result", is(30.0F));
-            //.time(lessThan(500L));
-
+           // .time(lessThan(500L));
     }
 }
