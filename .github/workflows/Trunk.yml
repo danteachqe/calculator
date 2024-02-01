@@ -80,9 +80,11 @@ jobs:
         run: |
             git config --local user.email "actions@github.com"
             git config --local user.name "GitHub Actions"
-      - name: Revert last commit
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-            git revert --no-edit HEAD
-            git push origin HEAD:master # Adjust branch name as needed
+            - name: Revert last commit
+            env:
+              MY_PERSONAL_TOKEN: ${{ secrets.MY_TOKEN }} # Use your PAT here
+            run: |
+              git config --local user.email "actions@github.com"
+              git config --local user.name "GitHub Actions"
+              git revert --no-edit HEAD
+              git push https://<username>:${{ env.MY_TOKEN }}@github.com/<username>/<repository>.git HEAD:master
