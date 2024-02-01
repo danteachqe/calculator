@@ -78,11 +78,9 @@ jobs:
       run: |
         git config --global user.email "actions@github.com"
         git config --global user.name "GitHub Actions"
-    - name: Revert last commit
-      env:
-        MY_TOKEN: ${{ secrets.MY_TOKEN }} 
+    - name: Revert last commit      
       run: |
         git revert --no-edit HEAD
-        git push https://${{ secrets.MY_TOKEN }}@github.com/danteachqe/calculator.git HEAD:master
+        git push https://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@github.com/danteachqe/calculator.git HEAD:master
 
   
