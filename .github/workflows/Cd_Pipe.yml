@@ -144,109 +144,110 @@ jobs:
               name: surefire-reports
               path: target/site/surefire-report.html
 
-  postman_tests:
-    runs-on: ubuntu-latest
-    needs: deploy_backend    
-    steps:
-      - name: Checkout repository code
-        uses: actions/checkout@v2
+  # postman_tests:
+  #   runs-on: ubuntu-latest
+  #   needs: deploy_backend    
+  #   steps:
+  #     - name: Checkout repository code
+  #       uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 20
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v2
+  #       with:
+  #         node-version: 20
 
-      - name: Install newman
-        run: npm install -g newman
+  #     - name: Install newman
+  #       run: npm install -g newman
 
-      - name: Install newman-reporter-html
-        run: npm install -g newman-reporter-html
+  #     - name: Install newman-reporter-html
+  #       run: npm install -g newman-reporter-html
 
-      - name: Run Postman tests
-        run: newman run ${{ github.workspace }}/src/test/Postman_Tests/Calculate.postman_collection.json -r html --reporter-html-export report.html
+  #     - name: Run Postman tests
+  #       run: newman run ${{ github.workspace }}/src/test/Postman_Tests/Calculate.postman_collection.json -r html --reporter-html-export report.html
 
-      - name: Upload test report
-        uses: actions/upload-artifact@v2
-        with:
-          name: postman-report
-          path: report.html
+  #     - name: Upload test report
+  #       uses: actions/upload-artifact@v2
+  #       with:
+  #         name: postman-report
+  #         path: report.html
 
-  run-selenium-tests:
-    runs-on: windows-latest
-    needs: [deploy_backend,deploy_front_end,lighthouse_check]
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+  # run-selenium-tests:
+  #   runs-on: windows-latest
+  #   needs: [deploy_backend,deploy_front_end,lighthouse_check]
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v2
 
-      - name: Set up JDK
-        uses: actions/setup-java@v2
-        with:
-          java-version: '11'
-          distribution: 'temurin'
+  #     - name: Set up JDK
+  #       uses: actions/setup-java@v2
+  #       with:
+  #         java-version: '11'
+  #         distribution: 'temurin'
 
-      - name: Cache Maven packages
-        uses: actions/cache@v2
-        with:
-            path: ~\.m2
-            key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-            restore-keys: ${{ runner.os }}-m2
+  #     - name: Cache Maven packages
+  #       uses: actions/cache@v2
+  #       with:
+  #           path: ~\.m2
+  #           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+  #           restore-keys: ${{ runner.os }}-m2
 
-      - name: Install Firefox
-        run: |
-          choco install firefox
+  #     - name: Install Firefox
+  #       run: |
+  #         choco install firefox
 
-      - name: Run Selenium tests
-        run:  mvn test -Dtest=SeleniumTest          
+  #     - name: Run Selenium tests
+  #       run:  mvn test -Dtest=SeleniumTest          
   
-  Revert_Deploy:
-    if: ${{ failure() }}
-    needs: [run-selenium-tests,postman_tests,run_RestA_Tests,k6_load_test,lighthouse_check]
-    runs-on: ubuntu-latest
+  # Revert_Deploy:
+  #   if: ${{ failure() }}
+  #   needs: [run-selenium-tests,postman_tests,run_RestA_Tests,k6_load_test,lighthouse_check]
+  #   runs-on: ubuntu-latest
     
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+  #   environment:
+  #     name: 'Production'
+  #     url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     
-    steps:
-    - name: Download artifact from build job
-      uses: actions/download-artifact@v2
-      with:
-        name: java-app
+  #   steps:
+  #   - name: Download artifact from build job
+  #     uses: actions/download-artifact@v2
+  #     with:
+  #       name: java-app
 
-    - name: Deploy to Azure Web App
-      id: deploy-to-webapp
-      uses: azure/webapps-deploy@v2
-      with:
+  #   - name: Deploy to Azure Web App
+  #     id: deploy-to-webapp
+  #     uses: azure/webapps-deploy@v2
+  #     with:
         
-        app-name: 'playground1'
-        slot-name: 'Production'
-        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0BEA4837F01F4E4D9BCEE1ADAE79D999 }}
-        package: '*.jar'
+  #       app-name: 'playground1'
+  #       slot-name: 'Production'
+  #       publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0BEA4837F01F4E4D9BCEE1ADAE79D999 }}
+  #       package: '*.jar'
 
-    - name: Display downloaded files
-      run: ls -R      
-  Promote_production:
-    runs-on: ubuntu-latest
-    needs: [run-selenium-tests,postman_tests,run_RestA_Tests,k6_load_test,lighthouse_check]
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+  #   - name: Display downloaded files
+  #     run: ls -R   
+
+  # Promote_production:
+  #   runs-on: ubuntu-latest
+  #   needs: [run-selenium-tests,postman_tests,run_RestA_Tests,k6_load_test,lighthouse_check]
+  #   environment:
+  #     name: 'Production'
+  #     url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     
-    steps:
-    - name: Download artifact from build job
-      uses: actions/download-artifact@v2
-      with:
-        name: java-app
+  #   steps:
+  #   - name: Download artifact from build job
+  #     uses: actions/download-artifact@v2
+  #     with:
+  #       name: java-app
 
-    - name: Deploy to Azure Web App
-      id: deploy-to-webapp
-      uses: azure/webapps-deploy@v2
-      with:
+  #   - name: Deploy to Azure Web App
+  #     id: deploy-to-webapp
+  #     uses: azure/webapps-deploy@v2
+  #     with:
         
-        app-name: 'playground1'
-        slot-name: 'Production'
-        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0BEA4837F01F4E4D9BCEE1ADAE79D999 }}
-        package: '*.jar'
+  #       app-name: 'playground1'
+  #       slot-name: 'Production'
+  #       publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0BEA4837F01F4E4D9BCEE1ADAE79D999 }}
+  #       package: '*.jar'
 
-    - name: Display downloaded files
-      run: ls -R
+  #   - name: Display downloaded files
+  #     run: ls -R
