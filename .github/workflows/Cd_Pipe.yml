@@ -139,7 +139,7 @@ jobs:
           name: k6-report
           path: results.json
 
-   jmeter_test:
+  jmeter_test:
     runs-on: ubuntu-latest
     needs: k6_load_test
     steps:
@@ -238,5 +238,4 @@ jobs:
           choco install firefox
 
       - name: Run Selenium tests
-        run:  mvn test -Dtest=SeleniumTest         
-  
+        run:  mvn test -Dtest=SeleniumTest  
