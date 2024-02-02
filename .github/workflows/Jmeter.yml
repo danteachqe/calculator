@@ -4,27 +4,50 @@ on:
   workflow_dispatch:
 
 jobs:
-  performance_tests:
+  jmeter_test:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - uses: actions/checkout@v2
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+    - name: Run JMeter tests
+      run: |
+        wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.4.1.tgz
+        tar -xzf apache-jmeter-5.4.1.tgz
+        apache-jmeter-5.4.1/bin/jmeter -n -t src/test/Jmeter/Test.jmx -l test_results.jtl
 
-      - name: Install JMeter
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y wget default-jdk-headless unzip
-          wget https://downloads.apache.org//jmeter/binaries/apache-jmeter-5.6.1.tgz
-          tar -xzf apache-jmeter-5.6.1.tgz
-          sudo mv apache-jmeter-5.6.1 /opt/jmeter
-          sudo ln -s /opt/jmeter/bin/jmeter /usr/bin/jmeter
 
-      - name: Run JMeter tests
-        run: jmeter -n -t src/test/Jmeter/Test.jmx -l results.jtl
 
-      - name: Upload test results
-        uses: actions/upload-artifact@v2
-        with:
-          name: jmeter-results
-          path: results.jtl
+# name: Jmeter
+
+# on: 
+#   workflow_dispatch:
+
+# jobs:
+#   performance_tests:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v2
+
+#       - name: Install JMeter
+#         run: |
+#           sudo apt-get update
+#           sudo apt-get install -y wget default-jdk-headless unzip
+#           wget https://downloads.apache.org//jmeter/binaries/apache-jmeter-5.6.1.tgz
+#           tar -xzf apache-jmeter-5.6.1.tgz
+#           sudo mv apache-jmeter-5.6.1 /opt/jmeter
+#           sudo ln -s /opt/jmeter/bin/jmeter /usr/bin/jmeter
+
+#       - name: Run JMeter tests
+#         run: jmeter -n -t src/test/Jmeter/Test.jmx -l results.jtl
+
+#       - name: Upload test results
+#         uses: actions/upload-artifact@v2
+#         with:
+#           name: jmeter-results
+#           path: results.jtl
