@@ -18,6 +18,12 @@ jobs:
         wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.4.1.tgz
         tar -xzf apache-jmeter-5.4.1.tgz
         apache-jmeter-5.4.1/bin/jmeter -n -t src/test/Jmeter/Test.jmx -l test_results.jtl
+        
+    - name: Upload JMeter Test Results
+      uses: actions/upload-artifact@v2
+      with:
+        name: jmeter-results
+        path: test_results.jtl
 
 
 
