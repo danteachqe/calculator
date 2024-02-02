@@ -7,6 +7,11 @@ name: CD Workflow
 #     types:
 #       - closed
 
+# on:
+#   schedule:
+#     # Runs at 9 PM UTC every day
+#     - cron: '0 21 * * *'
+
 on:
   workflow_dispatch:
 
