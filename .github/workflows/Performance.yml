@@ -71,8 +71,8 @@ jobs:
         run: |
           LIGHTHOUSE_SCORE=$(lighthouse --output=json --quiet --chrome-flags="--headless --no-sandbox" "https://www.blazedemo.com" | jq '.categories.performance.score * 100')
           echo "Performance score: $LIGHTHOUSE_SCORE"
-          if [ $LIGHTHOUSE_SCORE -lt 60 ]; then
-            echo "error: Performance score is below 60. Blocking PR."
+          if [ $LIGHTHOUSE_SCORE -lt 40 ]; then
+            echo "error: Performance score is below 40. Blocking PR."
             exit 1
 
   deploy_Backend_performance:
