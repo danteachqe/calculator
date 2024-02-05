@@ -6,8 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    needs: [super-lint, scan_dependency, run_unit_tests, run_coverage]
+    runs-on: ubuntu-latest    
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 11
