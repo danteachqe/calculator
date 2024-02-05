@@ -68,15 +68,15 @@ jobs:
       - name: Install Lighthouse
         run: npm install -g lighthouse
       - name: Run Lighthouse and check performance
-      run: |
-        set +e
-        LIGHTHOUSE_SCORE=$(lighthouse --output=json --quiet --chrome-flags="--headless --no-sandbox" "https://www.blazedemo.com" | jq '.categories.performance.score * 100')
-        echo "Performance score: $LIGHTHOUSE_SCORE"
-        if [ $LIGHTHOUSE_SCORE -lt 65 ]; then
-          echo "error: Performance score is below 65. Blocking PR."
-          exit 1
-        fi
-        set -e
+        run: |
+          set +e
+          LIGHTHOUSE_SCORE=$(lighthouse --output=json --quiet --chrome-flags="--headless --no-sandbox" "https://www.blazedemo.com" | jq '.categories.performance.score * 100')
+          echo "Performance score: $LIGHTHOUSE_SCORE"
+          if [ $LIGHTHOUSE_SCORE -lt 65 ]; then
+            echo "error: Performance score is below 65. Blocking PR."
+            exit 1
+          fi
+          set -e
          
 
   deploy_Backend_performance:
