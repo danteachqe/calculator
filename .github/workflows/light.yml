@@ -1,0 +1,38 @@
+name: Lighhouse Check
+
+on:
+    workflow_dispatch:
+
+jobs:
+  lighthouse_check:
+    runs-on: ubuntu-latest    
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 20
+
+      - name: Install jq
+        run: sudo apt-get install jq
+
+      - name: Install Lighthouse
+        run: npm install -g lighthouse
+
+      - name: Run Lighthouse and check performance
+        run: |
+          lighthouse --output=json --output-path=./lighthouse_report.json --quiet --chrome-flags="--headless --no-sandbox" "https://www.blazedemo.com"
+          LIGHTHOUSE_SCORE=$(jq '.categories.performance.score * 100' ./lighthouse_report.json)
+          echo "Performance score: $LIGHTHOUSE_SCORE"
+          if [ $LIGHTHOUSE_SCORE -lt 60 ]; then
+            echo "error: Performance score is below 60. Blocking PR."
+            exit 1
+          fi
+
+      - name: Upload Lighthouse Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: lighthouse-report
+          path: ./lighthouse_report.json  
