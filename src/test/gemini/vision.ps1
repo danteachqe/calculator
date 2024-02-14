@@ -7,7 +7,7 @@ if (-Not (Test-Path "image0.jpeg")) {
     exit 1
 }
 
-$API_KEY = "AIzaSyCusl3-5vmCE4umVHD79q-j2r7hF398AHk"
+$API_KEY = "YOUR API KEY HERE"
 
 # Convert the image to base64
 $imageBase64 = [Convert]::ToBase64String((Get-Content -Path "image0.jpeg" -Encoding Byte))
