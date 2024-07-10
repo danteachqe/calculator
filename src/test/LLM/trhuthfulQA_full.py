@@ -1,6 +1,6 @@
 from openai import OpenAI
 import os
-from deepeval.benchmarks import TruthfulQA
+from deepeval.benchmarks import TruthfulQA  
 from deepeval.benchmarks.modes import TruthfulQAMode
 
 # Optionally, set the API key here if it's not set as an environment variable
