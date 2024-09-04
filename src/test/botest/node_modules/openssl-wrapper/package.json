@@ -1,0 +1,42 @@
+{
+  "name": "openssl-wrapper",
+  "version": "0.3.4",
+  "description": "NodeJS OpenSSL wrapper",
+  "main": "lib/index.js",
+  "scripts": {
+    "start": "npm run test:watch",
+    "test": "mocha",
+    "test:watch": "npm run test -- --watch",
+    "test:coverage": "nyc --reporter=lcov npm test -- --reporter dot && nyc report",
+    "lint": "eslint src/",
+    "compile": "rimraf lib/*; babel src/ -d lib/ -s",
+    "compile:watch": "npm run compile -- -w",
+    "prepublish": "npm run compile"
+  },
+  "author": "Olivier Louvignes <olivier@mg-crea.com>",
+  "repository": "github:mgcrea/node-openssl-wrapper",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.9.0",
+    "babel-eslint": "^6.0.4",
+    "babel-plugin-transform-class-properties": "^6.9.1",
+    "babel-plugin-transform-function-bind": "^6.8.0",
+    "babel-plugin-transform-object-rest-spread": "^6.8.0",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-register": "^6.9.0",
+    "codeclimate-test-reporter": "^0.3.2",
+    "eslint": "^2.11.1",
+    "eslint-config-airbnb-base": "^3.0.1",
+    "eslint-plugin-import": "^1.8.1",
+    "expect": "^1.20.1",
+    "mocha": "^2.5.3",
+    "nyc": "^6.4.4",
+    "rimraf": "^2.5.2"
+  },
+  "keywords": [
+    "openssl",
+    "ssl",
+    "rsa"
+  ]
+}

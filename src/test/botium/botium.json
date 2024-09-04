@@ -1,0 +1,12 @@
+{
+    "botium": {
+      "Capabilities": {
+        "PROJECTNAME": "OpenAI Test",
+        "CONTAINERMODE": "SIMPLEREST ",
+        "CUSTOMHOOK_ONBUILD": "wrapper.js",
+        "SCRIPTING_DIR": "./tests",
+        "EXCLUDE_PATTERNS": ["node_modules/**", "**/node_modules/**"]
+      }
+    }
+  }
+  
