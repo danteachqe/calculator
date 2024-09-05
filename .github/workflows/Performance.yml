@@ -1,8 +1,11 @@
 name: Performance Check
 
 on:
-  push:
-    branches: [master]
+  workflow_dispatch:
+    
+# on:
+#   push:
+#     branches: [master]
 
 jobs:
   build:
