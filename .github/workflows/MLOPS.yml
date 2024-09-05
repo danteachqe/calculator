@@ -1,0 +1,63 @@
+name: MLOps Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  setup-environment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for 10 seconds
+        run: sleep 10
+
+  preprocess-data:
+    needs: setup-environment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for 10 seconds
+        run: sleep 10
+
+  train-model:
+    needs: preprocess-data
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for 10 seconds
+        run: sleep 10
+
+  validate-model:
+    needs: train-model
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for 10 seconds
+        run: sleep 10
+
+  package-model:
+    needs: validate-model
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for 10 seconds
+        run: sleep 10
+
+  deploy-model:
+    needs: package-model
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for 10 seconds
+        run: sleep 10
+
+  # Automated Testing Job
+  automated-testing:
+    needs: deploy-model
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for 10 seconds
+        run: sleep 10
+
+  monitor-model:
+    needs: automated-testing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for 10 seconds
+        run: sleep 10
