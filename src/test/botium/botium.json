@@ -1,12 +1,23 @@
 {
-    "botium": {
-      "Capabilities": {
-        "PROJECTNAME": "OpenAI Test",
-        "CONTAINERMODE": "SIMPLEREST ",
-        "CUSTOMHOOK_ONBUILD": "wrapper.js",
-        "SCRIPTING_DIR": "./tests",
-        "EXCLUDE_PATTERNS": ["node_modules/**", "**/node_modules/**"]
-      }
-    }
+  "botium": {
+  "Capabilities": {
+  "PROJECTNAME": "OpenAI Test",
+  "CONTAINERMODE": "simplerest",
+  "SIMPLEREST_URL": "https://api.openai.com/v1/chat/completions",
+  "SIMPLEREST_METHOD": "POST",
+  "SIMPLEREST_HEADERS_TEMPLATE": {
+  "Authorization": "<api key>",
+  "Content-Type": "application/json",
+  "OpenAI-Project": "<proj id if needed>"
+  },
+  "SIMPLEREST_BODY_TEMPLATE": {
+  "model": "gpt-4o-mini",
+  "messages": [{ "role": "user", "content": "{{msg.messageText}}" }]
+  },
+  "SIMPLEREST_BODY_JSONPATH": "$.choices[0]",
+  "SIMPLEREST_RESPONSE_JSONPATH": "$.message.content",
+  "SCRIPTING_DIR": "./tests",
+  "EXCLUDE_PATTERNS": ["node_modules/**", "**/node_modules/**"]
   }
-  
+  }
+  }
