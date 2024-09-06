@@ -45,7 +45,7 @@ jobs:
         run: npm install -g newman
   
       - name: Run Postman tests
-        run: newman run ${{ github.workspace }}/src/test/Postman_Tests/My Chat GPT Tests.postman_collection.json
+        run: newman run ${{ github.workspace }}/src/test/Postman_Tests/My_ChatGPT_Tests.postman_collection.json
 
   package-model:
     needs: validate-model
