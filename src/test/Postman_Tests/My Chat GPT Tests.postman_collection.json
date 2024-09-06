@@ -1,0 +1,240 @@
+{
+	"info": {
+		"_postman_id": "10167a7c-6c78-4924-9377-4cda69b34678",
+		"name": "My Chat GPT Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38128374"
+	},
+	"item": [
+		{
+			"name": "Online check",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer sk-proj-6JWYsOBT78Bolk6FQgn2T3BlbkFJwOx6mM0tauiqX1IdUE4f",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"model\": \"gpt-4-1106-preview\",\r\n    \"messages\": [\r\n        {\r\n            \"role\": \"user\",\r\n            \"content\": \"hey,are you online?\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.openai.com/v1/chat/completions",
+					"protocol": "https",
+					"host": [
+						"api",
+						"openai",
+						"com"
+					],
+					"path": [
+						"v1",
+						"chat",
+						"completions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Simple Question addition",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse the JSON response\r",
+							"let responseJson = pm.response.json();\r",
+							"\r",
+							"// Extract the content value\r",
+							"let contentValue = responseJson.choices[0].message.content;\r",
+							"\r",
+							"// Test if the content value is exactly \"4\"\r",
+							"pm.test(\"Content value is 4\", function () {\r",
+							"    pm.expect(contentValue).to.eql(\"4\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer sk-proj-6JWYsOBT78Bolk6FQgn2T3BlbkFJwOx6mM0tauiqX1IdUE4f",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"model\": \"gpt-4-1106-preview\",\r\n    \"messages\": [\r\n        {\r\n            \"role\": \"user\",\r\n            \"content\": \"what is 2+2\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.openai.com/v1/chat/completions",
+					"protocol": "https",
+					"host": [
+						"api",
+						"openai",
+						"com"
+					],
+					"path": [
+						"v1",
+						"chat",
+						"completions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "restricted questison",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse the JSON response\r",
+							"let responseJson = pm.response.json();\r",
+							"\r",
+							"// Extract the content value\r",
+							"let contentValue = responseJson.choices[0].message.content;\r",
+							"\r",
+							"// Test if the content value is exactly \"4\"\r",
+							"pm.test(\"Content value is 4\", function () {\r",
+							"    pm.expect(contentValue).to.eql(\"4\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer sk-proj-6JWYsOBT78Bolk6FQgn2T3BlbkFJwOx6mM0tauiqX1IdUE4f",
+						"type": "default"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"model\": \"gpt-4-1106-preview\",\r\n    \"messages\": [\r\n        {\r\n            \"role\": \"user\",\r\n            \"content\": \"what is 2+2, show only the result\"\r\n        }\r\n    ]\r\n}"
+				},
+				"url": {
+					"raw": "https://api.openai.com/v1/chat/completions",
+					"protocol": "https",
+					"host": [
+						"api",
+						"openai",
+						"com"
+					],
+					"path": [
+						"v1",
+						"chat",
+						"completions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "my own gpt",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse the JSON response\r",
+							"let responseJson = pm.response.json();\r",
+							"\r",
+							"// Extract the content value\r",
+							"let contentValue = responseJson.choices[0].message.content;\r",
+							"\r",
+							"// Test if the content contains a specific string (e.g., \"buy\")\r",
+							"pm.test(\"Content contains the specified string\", function () {\r",
+							"    pm.expect(contentValue).to.include(\"Enterprise\"); // Replace \"buy\" with the string you want to search for\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer sk-proj-6JWYsOBT78Bolk6FQgn2T3BlbkFJwOx6mM0tauiqX1IdUE4f",
+						"type": "default"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"model\": \"gpt-4-1106-preview\",\r\n    \"messages\": [\r\n        {\r\n            \"role\": \"user\",\r\n            \"content\": \"what is the name of the space ship fron star trek?\"\r\n        }\r\n    ]\r\n}"
+				},
+				"url": {
+					"raw": "https://api.openai.com/v1/chat/completions",
+					"protocol": "https",
+					"host": [
+						"api",
+						"openai",
+						"com"
+					],
+					"path": [
+						"v1",
+						"chat",
+						"completions"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
