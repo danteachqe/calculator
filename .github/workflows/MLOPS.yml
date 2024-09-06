@@ -3,7 +3,7 @@ name: MLOps Pipeline
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   setup-environment:
