@@ -17,7 +17,7 @@ def get_openai_response(prompt):
         "Authorization": f"Bearer {openai_api_key}"
     }
     data = {
-        "model": "gpt-4",  # You can change to "gpt-3.5-turbo" if needed
+        "model": "gpt-4o-mini",  # You can change to "gpt-3.5-turbo" if needed
         "messages": [
             {"role": "system", "content": "You are ChatGPT, a large language model trained by OpenAI."},
             {"role": "user", "content": prompt}
