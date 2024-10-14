@@ -12,7 +12,7 @@ client = OpenAI(api_key=api_key)  # Instantiate the client with the API key
 
 # Define a model class that will be passed to the benchmark
 class GPT35Model:
-    def __init__(self, model_name="gpt-3.5-turbo"):
+    def __init__(self, model_name="gpt-4o"):
         self.model_name = model_name
 
     # This method must return a single string as an answer
