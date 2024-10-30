@@ -39,7 +39,7 @@ jobs:
       - name: Calculate code coverage
         run: mvn jacoco:report "-DskipTests" "-Ddependency-check.skip=true"
       - name: Archive code coverage results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: code-coverage-report
           path: target/site/jacoco/
@@ -71,7 +71,7 @@ jobs:
         run: mvn dependency-check:check
 
       - name: Upload Dependency Check Report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: dependency-check-report
           path: |
