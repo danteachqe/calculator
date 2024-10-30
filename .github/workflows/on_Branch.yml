@@ -1,4 +1,4 @@
-name: Preintergation Checks on Feature Branch
+name: Pre-intergation Checks on Feature Branch
 
 # on:
 #   pull_request:
