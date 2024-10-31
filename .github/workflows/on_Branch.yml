@@ -161,7 +161,7 @@ jobs:
           fi
 
       - name: Upload Lighthouse Report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: lighthouse-report
           path: ./lighthouse_report.json
