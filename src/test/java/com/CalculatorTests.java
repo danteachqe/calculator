@@ -18,4 +18,17 @@ public class CalculatorTests {
             .body("result", is(30.0F));
            // .time(lessThan(500L));
     }
+
+    @Test // Annotate the method as a JUnit test
+    public void testMultiply() {
+        given()
+                .contentType("application/json")
+                .body("{ \"operation\": \"multiply\", \"number1\": 10, \"number2\": 20 }")
+                .when()
+                .post("http://playground1.azurewebsites.net/calculate")
+                .then()
+                .statusCode(200)
+                .body("result", is(200.0F));
+        // .time(lessThan(500L));
+    }
 }
