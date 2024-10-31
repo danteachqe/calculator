@@ -12,7 +12,6 @@ from tenacity import retry, wait_exponential, stop_after_attempt
 # ==============================
 
 # **WARNING:** Embedding API keys directly in code is insecure.
-# Ensure this script is stored securely and not shared publicly.
 
 # Retrieve OpenAI API key from environment variable
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
