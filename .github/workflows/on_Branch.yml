@@ -130,3 +130,31 @@ jobs:
         with:
           name: k6-report
           path: results.json
+
+
+  run-selenium-tests:
+    runs-on: windows-latest
+#    needs: [ deploy_backend,deploy_front_end,lighthouse_check ]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+
+      - name: Cache Maven packages
+        uses: actions/cache@v2
+        with:
+          path: ~\.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: Install Firefox
+        run: |
+          choco install firefox
+
+      - name: Run Selenium tests
+        run: mvn test -Dtest=SeleniumTest
