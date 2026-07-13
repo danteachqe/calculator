@@ -31,7 +31,7 @@ jobs:
         run: echo "Autohealing tests..." # Replace with your autoheal test command
 
   comit-changes:
-    needs: autoheal-tests
+    needs: [autoheal-tests, run-coverage]
     if: failure() && needs.run-coverage.result == 'failure'
     runs-on: ubuntu-latest
     steps:
