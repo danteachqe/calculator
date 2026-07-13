@@ -1,4 +1,4 @@
-name: Nightly Build
+﻿name: Nightly Build
 
 on:
   workflow_dispatch:
@@ -9,10 +9,10 @@ jobs:
   
     steps:
       - name: Checkout repository code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7
 
       - name: Run Super-Linter
-        uses: github/super-linter@v4
+        uses: github/super-linter@v7
         continue-on-error: true
         env:
           DEFAULT_BRANCH: main
@@ -24,14 +24,13 @@ jobs:
     needs: super-lint
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v7
     - name: Set up JDK 11
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v5
       with:
         java-version: '11'
         distribution: 'temurin'
         cache: maven
-        node-version: 16
     - name: Run unit tests
       run: mvn -B test --file pom.xml
 
@@ -40,18 +39,17 @@ jobs:
     needs: run_unit_tests
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v7
     - name: Set up JDK 11
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v5
       with:
         java-version: '11'
         distribution: 'temurin'
         cache: maven
-        node-version: 16
     - name: Calculate code coverage
       run: mvn clean verify jacoco:report "-Ddependency-check.skip=true"  
     - name: Archive code coverage results
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v7
       with:
         name: code-coverage-report
         path: target/site/jacoco/
@@ -62,13 +60,12 @@ jobs:
     needs: run_coverage
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v7
     - name: Set up JDK 11
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v5
       with:
         java-version: '11'
         distribution: 'temurin'
-        node-version: 16
         cache: maven
     - name: Build with Maven
       run: mvn dependency-check:check -DskipTests
@@ -78,18 +75,17 @@ jobs:
     needs: scan_dependency
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v7
     - name: Set up JDK 11
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v5
       with:
         java-version: '11'
         distribution: 'temurin'
         cache: maven
-        node-version: 16
     - name: Build with Maven
       run: mvn clean install "-DskipTests" "-Djacoco.skip=true" "-Ddependency-check.skip=true"
     - name: Upload artifact for deployment job
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v7
       with:
         name: java-app
         path: '${{ github.workspace }}/target/*.jar'  
@@ -103,13 +99,13 @@ jobs:
     
     steps:
     - name: Download artifact from build job
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v8
       with:
         name: java-app
 
     - name: Deploy to Azure Web App
       id: deploy-to-webapp
-      uses: azure/webapps-deploy@v2
+      uses: azure/webapps-deploy@v3
       with:
         app-name: 'playground1'
         slot-name: 'Production'
@@ -123,15 +119,15 @@ jobs:
     needs: deploy_functional
     steps:
     - name: Checkout repository code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v7
 
     - name: Wait for 10 seconds
       run: sleep 10s
 
     - name: Set up Node.js
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v6
       with:
-        node-version: 16
+        node-version: 24
 
     - name: Install newman
       run: npm install -g newman
@@ -150,13 +146,13 @@ jobs:
     - name: Wait for 60 seconds
       run: sleep 60s
     - name: Download artifact from build job
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v8
       with:
         name: java-app
 
     - name: Deploy to Azure Web App
       id: deploy-to-webapp
-      uses: azure/webapps-deploy@v2
+      uses: azure/webapps-deploy@v3
       with:
         app-name: 'playground1'
         slot-name: 'Production'
@@ -170,12 +166,12 @@ jobs:
     needs: deploy_performance
     steps:
       - name: Checkout repository code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v6
         with:
-          node-version: 16
+          node-version: 24
 
       - name: Install jq
         run: sudo apt-get install jq

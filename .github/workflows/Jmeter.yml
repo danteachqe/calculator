@@ -1,4 +1,4 @@
-name: Jmeter
+﻿name: Jmeter
 
 on: 
   workflow_dispatch:
@@ -7,9 +7,9 @@ jobs:
   jmeter_test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v7
     - name: Set up JDK 11
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v5
       with:
         java-version: '11'
         distribution: 'adopt'
@@ -20,7 +20,7 @@ jobs:
         apache-jmeter-5.4.1/bin/jmeter -n -t src/test/Jmeter/Test.jmx -l test_results.jtl
         
     - name: Upload JMeter Test Results
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v7
       with:
         name: jmeter-results
         path: test_results.jtl
@@ -38,7 +38,7 @@ jobs:
 
 #     steps:
 #       - name: Checkout code
-#         uses: actions/checkout@v2
+#         uses: actions/checkout@v7
 
 #       - name: Install JMeter
 #         run: |
@@ -53,7 +53,8 @@ jobs:
 #         run: jmeter -n -t src/test/Jmeter/Test.jmx -l results.jtl
 
 #       - name: Upload test results
-#         uses: actions/upload-artifact@v2
+#         uses: actions/upload-artifact@v7
 #         with:
 #           name: jmeter-results
 #           path: results.jtl
+

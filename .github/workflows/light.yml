@@ -1,4 +1,4 @@
-name: Lighhouse Check
+﻿name: Lighhouse Check
 
 on:
     workflow_dispatch:
@@ -8,12 +8,12 @@ jobs:
     runs-on: ubuntu-latest    
     steps:
       - name: Checkout repository code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 24
 
       - name: Install jq
         run: sudo apt-get install jq
@@ -32,7 +32,7 @@ jobs:
           fi
 
       - name: Upload Lighthouse Report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v7
         with:
           name: lighthouse-report
           path: ./lighthouse_report.json  

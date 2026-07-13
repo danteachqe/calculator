@@ -1,4 +1,4 @@
-name: MLOps Pipeline
+﻿name: MLOps Pipeline
 
 on:
   push:
@@ -31,15 +31,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7
   
       - name: Wait for 5 seconds
         run: sleep 5s
   
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v6
         with:
-          node-version: 16
+          node-version: 24
   
       - name: Install newman
         run: npm install -g newman
@@ -75,3 +75,4 @@ jobs:
     steps:
       - name: Wait for 10 seconds
         run: sleep 10
+

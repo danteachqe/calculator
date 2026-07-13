@@ -1,4 +1,4 @@
-name: Feature Branch Workflow
+﻿name: Feature Branch Workflow
 
 on:
   workflow_dispatch:
@@ -12,9 +12,9 @@ jobs:
   run_unit_tests:
     runs-on: ubuntu-latest  
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
       - name: Set up JDK 11
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v5
         with:
           java-version: '11'
           distribution: 'temurin'
@@ -27,9 +27,9 @@ jobs:
 #     runs-on: ubuntu-latest
 #     #needs: run_unit_tests
 #     steps:
-#       - uses: actions/checkout@v2
+#       - uses: actions/checkout@v7
 #       - name: Set up JDK 11
-#         uses: actions/setup-java@v2
+#         uses: actions/setup-java@v5
 #         with:
 #           java-version: '11'
 #           distribution: 'temurin'
@@ -38,7 +38,7 @@ jobs:
 #       - name: Calculate code coverage
 #         run: mvn jacoco:report "-DskipTests" "-Ddependency-check.skip=true"
 #       - name: Archive code coverage results
-#         uses: actions/upload-artifact@v2
+#         uses: actions/upload-artifact@v7
 #         with:
 #           name: code-coverage-report
 #           path: target/site/jacoco/
@@ -48,16 +48,16 @@ jobs:
 #     runs-on: ubuntu-latest
 #     #needs: run_coverage
 #     steps:
-#       - uses: actions/checkout@v2
+#       - uses: actions/checkout@v7
 #       - name: Set up JDK 11
-#         uses: actions/setup-java@v2
+#         uses: actions/setup-java@v5
 #         with:
 #           java-version: '11'
 #           distribution: 'temurin'
 #           cache: maven
 
 #       - name: Cache OWASP Dependency Check Data
-#         uses: actions/cache@v2
+#         uses: actions/cache@v6
 #         with:
 #           path: |
 #             ~/.m2
@@ -70,7 +70,7 @@ jobs:
 #         run: mvn dependency-check:check
 
 #       - name: Upload Dependency Check Report
-#         uses: actions/upload-artifact@v2
+#         uses: actions/upload-artifact@v7
 #         with:
 #           name: dependency-check-report
 #           path: |
@@ -81,9 +81,9 @@ jobs:
 #   super-lint:
 #     runs-on: ubuntu-latest  
 #     steps:
-#       - uses: actions/checkout@v2
+#       - uses: actions/checkout@v7
 #       - name: Set up JDK 11
-#         uses: actions/setup-java@v2
+#         uses: actions/setup-java@v5
 #         with:
 #           java-version: '11'
 #           distribution: 'temurin'
@@ -96,9 +96,9 @@ jobs:
 #     runs-on: ubuntu-latest
 #     needs: [super-lint,scan_dependency,run_unit_tests,run_coverage]
 #     steps:
-#       - uses: actions/checkout@v2
+#       - uses: actions/checkout@v7
 #       - name: Set up JDK 11
-#         uses: actions/setup-java@v2
+#         uses: actions/setup-java@v5
 #         with:
 #           java-version: '11'
 #           distribution: 'temurin'
@@ -107,7 +107,7 @@ jobs:
 #       - name: Build with Maven
 #         run: mvn clean install "-DskipTests" "-Djacoco.skip=true" "-Ddependency-check.skip=true"
 #       - name: Upload artifact for deployment job
-#         uses: actions/upload-artifact@v2
+#         uses: actions/upload-artifact@v7
 #         with:
 #           name: java-app
 #           path: '${{ github.workspace }}/target/*.jar'
@@ -121,13 +121,13 @@ jobs:
     
 #     steps:
 #     - name: Download artifact from build job
-#       uses: actions/download-artifact@v2
+#       uses: actions/download-artifact@v8
 #       with:
 #         name: java-app
 
 #     - name: Deploy to Azure Web App
 #       id: deploy-to-webapp
-#       uses: azure/webapps-deploy@v2
+#       uses: azure/webapps-deploy@v3
 #       with:
         
 #         app-name: 'playground1'
@@ -142,7 +142,7 @@ jobs:
 #     runs-on: ubuntu-latest
 #     needs: build
 #     steps:
-#       - uses: actions/checkout@v2
+#       - uses: actions/checkout@v7
 #       - name: Run Unit Tests
 #         run: echo "Running unit tests..." 
 
@@ -151,12 +151,12 @@ jobs:
 #     needs: deploy_front_end
 #     steps:
 #       - name: Checkout repository code
-#         uses: actions/checkout@v2
+#         uses: actions/checkout@v7
 
 #       - name: Set up Node.js
-#         uses: actions/setup-node@v2
+#         uses: actions/setup-node@v6
 #         with:
-#           node-version: 16
+#           node-version: 24
 
 #       - name: Install jq
 #         run: sudo apt-get install jq
@@ -177,7 +177,7 @@ jobs:
 #     runs-on: ubuntu-latest
 #     needs: build
 #     steps:
-#       - uses: actions/checkout@v2
+#       - uses: actions/checkout@v7
 #       - name: Run Unit Tests
 #         run: echo "Running unit tests..." 
 
@@ -187,14 +187,14 @@ jobs:
 #     needs: build
 #     steps:
 #       - name: Checkout
-#         uses: actions/checkout@v1
+#         uses: actions/checkout@v7
 #       - name: Run local k6 test
-#         uses: grafana/k6-action@v0.2.0
+#         uses: grafana/k6-action@v0.3.1
 #         with:
 #           filename: ${{ github.workspace }}/src/test/K6/perftest.js
 #           flags: --out json=results.json
 #       - name: Upload performance test results
-#         uses: actions/upload-artifact@v3
+#         uses: actions/upload-artifact@v7
 #         with:
 #           name: k6-report
 #           path: results.json
@@ -203,9 +203,9 @@ jobs:
 #         runs-on: ubuntu-latest  
 #         needs: deploy_backend
 #         steps:
-#           - uses: actions/checkout@v2
+#           - uses: actions/checkout@v7
 #           - name: Set up JDK 11
-#             uses: actions/setup-java@v2
+#             uses: actions/setup-java@v5
 #             with:
 #               java-version: '11'
 #               distribution: 'temurin'
@@ -219,7 +219,7 @@ jobs:
 #             run: mvn surefire-report:report
 
 #           - name: Upload Surefire HTML Report
-#             uses: actions/upload-artifact@v2
+#             uses: actions/upload-artifact@v7
 #             with:
 #               name: surefire-reports
 #               path: target/site/surefire-report.html
@@ -229,12 +229,12 @@ jobs:
 #     needs: deploy_backend    
 #     steps:
 #       - name: Checkout repository code
-#         uses: actions/checkout@v2
+#         uses: actions/checkout@v7
 
 #       - name: Set up Node.js
-#         uses: actions/setup-node@v2
+#         uses: actions/setup-node@v6
 #         with:
-#           node-version: 20
+#           node-version: 24
 
 #       - name: Install newman
 #         run: npm install -g newman
@@ -246,7 +246,7 @@ jobs:
 #         run: newman run ${{ github.workspace }}/src/test/Postman_Tests/Calculate.postman_collection.json -r html --reporter-html-export report.html
 
 #       - name: Upload test report
-#         uses: actions/upload-artifact@v2
+#         uses: actions/upload-artifact@v7
 #         with:
 #           name: postman-report
 #           path: report.html
@@ -256,16 +256,16 @@ jobs:
 #     needs: [deploy_backend,deploy_front_end,lighthouse_check]
 #     steps:
 #       - name: Checkout repository
-#         uses: actions/checkout@v2
+#         uses: actions/checkout@v7
 
 #       - name: Set up JDK
-#         uses: actions/setup-java@v2
+#         uses: actions/setup-java@v5
 #         with:
 #           java-version: '11'
 #           distribution: 'temurin'
 
 #       - name: Cache Maven packages
-#         uses: actions/cache@v2
+#         uses: actions/cache@v6
 #         with:
 #             path: ~\.m2
 #             key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
@@ -290,9 +290,9 @@ jobs:
 #   run_unit_tests:
 #     runs-on: ubuntu-latest  
 #     steps:
-#       - uses: actions/checkout@v2
+#       - uses: actions/checkout@v7
 #       - name: Set up JDK 11
-#         uses: actions/setup-java@v2
+#         uses: actions/setup-java@v5
 #         with:
 #           java-version: '11'
 #           distribution: 'temurin'
@@ -305,9 +305,9 @@ jobs:
 #     runs-on: ubuntu-latest
 #     #needs: run_unit_tests
 #     steps:
-#       - uses: actions/checkout@v2
+#       - uses: actions/checkout@v7
 #       - name: Set up JDK 11
-#         uses: actions/setup-java@v2
+#         uses: actions/setup-java@v5
 #         with:
 #           java-version: '11'
 #           distribution: 'temurin'
@@ -316,7 +316,7 @@ jobs:
 #       - name: Calculate code coverage
 #         run: mvn jacoco:report "-DskipTests" "-Ddependency-check.skip=true"
 #       - name: Archive code coverage results
-#         uses: actions/upload-artifact@v2
+#         uses: actions/upload-artifact@v7
 #         with:
 #           name: code-coverage-report
 #           path: target/site/jacoco/
@@ -326,16 +326,16 @@ jobs:
 #     runs-on: ubuntu-latest
 #     #needs: run_coverage
 #     steps:
-#       - uses: actions/checkout@v2
+#       - uses: actions/checkout@v7
 #       - name: Set up JDK 11
-#         uses: actions/setup-java@v2
+#         uses: actions/setup-java@v5
 #         with:
 #           java-version: '11'
 #           distribution: 'temurin'
 #           cache: maven
 
 #       - name: Cache OWASP Dependency Check Data
-#         uses: actions/cache@v2
+#         uses: actions/cache@v6
 #         with:
 #           path: |
 #             ~/.m2
@@ -348,7 +348,7 @@ jobs:
 #         run: mvn dependency-check:check
 
 #       - name: Upload Dependency Check Report
-#         uses: actions/upload-artifact@v2
+#         uses: actions/upload-artifact@v7
 #         with:
 #           name: dependency-check-report
 #           path: |
@@ -361,10 +361,10 @@ jobs:
 #     #needs: scan_dependency
 #     steps:
 #       - name: Checkout repository code
-#         uses: actions/checkout@v2
+#         uses: actions/checkout@v7
 
 #       - name: Run Super-Linter
-#         uses: github/super-linter@v4
+#         uses: github/super-linter@v7
 #         continue-on-error: true
 #         env:
 #           DEFAULT_BRANCH: main
@@ -372,7 +372,7 @@ jobs:
 #           FILTER_REGEX_EXCLUDE: '^target/.*' 
 
 #       - name: Upload Dependency Check Report
-#         uses: actions/upload-artifact@v2
+#         uses: actions/upload-artifact@v7
 #         if: always()
 #         with:
 #           name: superlinter logs         
@@ -382,9 +382,9 @@ jobs:
 #     runs-on: ubuntu-latest
 #     needs: [super-lint,scan_dependency,run_unit_tests,run_coverage]
 #     steps:
-#       - uses: actions/checkout@v2
+#       - uses: actions/checkout@v7
 #       - name: Set up JDK 11
-#         uses: actions/setup-java@v2
+#         uses: actions/setup-java@v5
 #         with:
 #           java-version: '11'
 #           distribution: 'temurin'
@@ -393,7 +393,7 @@ jobs:
 #       - name: Build with Maven
 #         run: mvn clean install "-DskipTests" "-Djacoco.skip=true" "-Ddependency-check.skip=true"
 #       - name: Upload artifact for deployment job
-#         uses: actions/upload-artifact@v2
+#         uses: actions/upload-artifact@v7
 #         with:
 #           name: java-app
 #           path: '${{ github.workspace }}/target/*.jar'
