@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    
+
     <groupId>com.example</groupId>
     <artifactId>calculator</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
-    
-    <name>Spring Boot Blank Project (from https://github.com/making/spring-boot-blank)</name>
-    
+
+    <name>Spring Boot Blank Project</name>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.5.5</version>
         <relativePath/>
     </parent>
-    
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <start-class>com.CalculatorApplication</start-class>
@@ -26,86 +26,38 @@
         <lombok.version>1.18.20</lombok.version>
         <coverage.need>0.5</coverage.need>
     </properties>
-    
+
     <dependencies>
-        <!-- Spring Boot Dependencies -->
+        <!-- Spring Boot Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.owasp.encoder</groupId>
-            <artifactId>encoder</artifactId>
-            <version>1.2.2</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.bonigarcia</groupId>
-            <artifactId>webdrivermanager</artifactId>
-            <version>5.0.3</version> 
-            <scope>test</scope>
-        </dependency>
-<!-- Selenium -->
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-opera-driver</artifactId>
-            <version>4.1.0</version> 
-        </dependency>
 
-<!-- Selenium Driver -->
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>4.10.0</version> 
-        </dependency>
-        
-        <!-- Database Dependency -->
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-        </dependency>
-        
-        <!-- Lombok Dependency -->
+        <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
-        
-        <!-- Testing Dependencies -->
+
+        <!-- Spring Boot Test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        
-        <!-- RestAssured Dependency -->
+
+        <!-- Rest Assured for API Testing -->
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
             <version>4.4.0</version>
             <scope>test</scope>
         </dependency>
-        
-        <!-- Apache HttpClient Dependency -->
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.5.13</version>
-        </dependency>
-        
-        <!-- Jackson Databind Dependency -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.12.4</version>
-        </dependency>
     </dependencies>
-    
+
     <build>
         <plugins>
             <!-- Spring Boot Maven Plugin -->
@@ -113,7 +65,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-            
+
             <!-- JaCoCo Maven Plugin -->
             <plugin>
                 <groupId>org.jacoco</groupId>
@@ -134,7 +86,6 @@
                         </goals>
                         <configuration>
                             <includes>
-                                <!-- Include only files under src/main/java -->
                                 <include>**/src/main/java/**/*.java</include>
                             </includes>
                         </configuration>
@@ -158,7 +109,6 @@
                                 </rule>
                             </rules>
                             <includes>
-                                <!-- Include only files under src/main/java -->
                                 <include>**/src/main/java/**/*.java</include>
                             </includes>
                         </configuration>
@@ -166,12 +116,12 @@
                 </executions>
             </plugin>
 
+            <!-- Maven Surefire Plugin for running tests -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.22.2</version>
                 <dependencies>
-                   
                     <dependency>
                         <groupId>org.junit.jupiter</groupId>
                         <artifactId>junit-jupiter-engine</artifactId>
@@ -179,7 +129,7 @@
                     </dependency>
                 </dependencies>
             </plugin>
-            
+
             <!-- Maven Compiler Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -197,8 +147,8 @@
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
-            
-           <!-- OWASP Dependency Check Maven Plugin -->
+
+            <!-- OWASP Dependency Check Maven Plugin -->
             <plugin>
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
@@ -210,12 +160,11 @@
                             <goal>check</goal>
                         </goals>
                         <configuration>
-                            <failBuildOnCVSS>11</failBuildOnCVSS>
+                            <failBuildOnCVSS>7</failBuildOnCVSS>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-            
         </plugins>
     </build>
 </project>
